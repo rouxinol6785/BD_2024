@@ -20,7 +20,7 @@ def db_connection():
         password='password',
         host='127.0.0.1',
         port='5432',
-        database='MeDEIsync_DB'
+        database='MeDEIsync'
     )
 
     return db
@@ -48,15 +48,14 @@ def landing_page():
 @app.route('/MeDEIsync_DB/user/registration/patient', methods =['POST'])
 def registration():
 
-    logger.info('POST /MeDEIsync_DB/user/registration')
+    logger.info('POST /MeDEIsync_DB/user/registration/patient')
     
-    payload = flask.request_get_json()
+    payload = flask.request.get_json()
 
     conn = db_connection()
     cur = conn.cursor()
-    print("helo")
 
-    logger.debug('POST /MeDEIsync_DB/user/registration - payload: {payload}')
+    logger.debug('POST /MeDEIsync_DB/user/registration/patient - payload: {payload}')
 
 
     if 'nome' not in payload or 'idade' not in payload  or 'medical_record' not in payload:
@@ -67,13 +66,15 @@ def registration():
         return flask.jsonify(response)
     
     #para fazer o ID o melhor é fazer o autoincrement da base de dados
-    id = str(random.randint(0,30))
+    id = random.randint(0,30)
 
-    statement = 'INSERT INTO patient (id,nome,idade,medical_record) VALUES(%s,%s,%s,%s)'
+    statement = 'INSERT INTO use (id,nome,idade) VALUES(%s,%s,%s)'
+    statemnt2 = 'INSERT INTO patient (use_id_, medical_record) VALUES(%s,%s)'
 
-    values = (id,payload['nome'],payload['idade'],payload['medical_record'])
+    values = (id,payload['nome'],int(payload['idade']))
+    values2 = (id,payload['medical_record'])
     try:
-        cur.execute("SELECT nome FROM patient WHERE nome = %s",payload['nome'])
+        cur.execute("SELECT nome FROM use WHERE nome = %s",(payload['nome'],))
         existing_user = cur.fetchone()
         if existing_user:
             response ={
@@ -84,6 +85,7 @@ def registration():
             #isto sempre no início das transações, se der merda a meio podemos fazer rollback e volta a como estava aqui
             cur.execute("BEGIN TRANSACTION")
             cur.execute(statement,values)
+            cur.execute(statemnt2,values2)
             conn.commit()
             response = {
                 'status': StatusCodes['success'], 'results': f'Paciente {payload['nome']} inserido!'

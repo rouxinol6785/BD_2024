@@ -1,0 +1,132 @@
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/user/registration
+INFO:werkzeug:127.0.0.1 - - [21/May/2024 17:29:10] "[35m[1mPOST /MeDEIsync_DB/user/registration/patient HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/user/registration
+INFO:werkzeug:127.0.0.1 - - [21/May/2024 17:30:32] "[35m[1mPOST /MeDEIsync_DB/user/registration/patient HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/user/registration
+DEBUG:logger:POST /MeDEIsync_DB/user/registration - payload: {payload}
+ERROR:logger:POST /MeDEIsync_DB/registration/patient - error: not all arguments converted during string formatting
+INFO:werkzeug:127.0.0.1 - - [21/May/2024 17:31:53] "POST /MeDEIsync_DB/user/registration/patient HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/user/registration
+DEBUG:logger:POST /MeDEIsync_DB/user/registration - payload: {payload}
+ERROR:logger:POST /MeDEIsync_DB/registration/patient - error: not all arguments converted during string formatting
+INFO:werkzeug:127.0.0.1 - - [21/May/2024 17:33:10] "POST /MeDEIsync_DB/user/registration/patient HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/user/registration/patient
+DEBUG:logger:POST /MeDEIsync_DB/user/registration/patient - payload: {payload}
+ERROR:logger:POST /MeDEIsync_DB/registration/patient - error: column "nome" does not exist
+LINE 1: SELECT nome FROM patient WHERE nome = 'Pedro'
+               ^
+
+INFO:werkzeug:127.0.0.1 - - [21/May/2024 17:38:27] "POST /MeDEIsync_DB/user/registration/patient HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/user/registration/patient
+DEBUG:logger:POST /MeDEIsync_DB/user/registration/patient - payload: {payload}
+ERROR:logger:POST /MeDEIsync_DB/registration/patient - error: unsupported format character 'd' (0x64) at index 40
+INFO:werkzeug:127.0.0.1 - - [21/May/2024 17:46:49] "POST /MeDEIsync_DB/user/registration/patient HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/user/registration/patient
+DEBUG:logger:POST /MeDEIsync_DB/user/registration/patient - payload: {payload}
+INFO:werkzeug:127.0.0.1 - - [21/May/2024 17:49:53] "POST /MeDEIsync_DB/user/registration/patient HTTP/1.1" 200 -
