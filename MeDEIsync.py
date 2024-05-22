@@ -3,9 +3,11 @@ import logging
 import psycopg2
 import jwt
 import random
+import time
 
 
 app = flask.Flask(__name__)
+jwt_key = "DB_upa"
 
 
 StatusCodes = {
@@ -44,21 +46,21 @@ def landing_page():
     Bem-vindo!<br/>
 """
 
+# register patient
+@app.route('/MeDEIsync_DB/user/register/patient', methods =['POST'])
+def patient_registration():
 
-@app.route('/MeDEIsync_DB/user/registration/patient', methods =['POST'])
-def registration():
-
-    logger.info('POST /MeDEIsync_DB/user/registration/patient')
+    logger.info('POST /MeDEIsync_DB/user/register/patient')
     
     payload = flask.request.get_json()
 
     conn = db_connection()
     cur = conn.cursor()
 
-    logger.debug('POST /MeDEIsync_DB/user/registration/patient - payload: {payload}')
+    logger.debug(f'POST /MeDEIsync_DB/user/registration/patient - payload: {payload}')
 
 
-    if 'nome' not in payload or 'idade' not in payload  or 'medical_record' not in payload:
+    if 'cc'not in payload or 'nome' not in payload or 'password' not in payload or 'data_nascimento' not in payload  or 'medical_record' not in payload:
         response = {
             'status': StatusCodes['api_error'], 'results':'Missing required fields'
         }
@@ -68,11 +70,11 @@ def registration():
     #para fazer o ID o melhor é fazer o autoincrement da base de dados
     id = random.randint(0,30)
 
-    statement = 'INSERT INTO use (id,nome,idade) VALUES(%s,%s,%s)'
-    statemnt2 = 'INSERT INTO patient (use_id_, medical_record) VALUES(%s,%s)'
+    statement = 'INSERT INTO use (cc,nome,password,data_nascimento) VALUES(%s,%s,%s,%s)'
+    statemnt2 = 'INSERT INTO patient (use_cc, medical_record) VALUES(%s,%s)'
 
-    values = (id,payload['nome'],int(payload['idade']))
-    values2 = (id,payload['medical_record'])
+    values = (int (payload['cc']),payload['nome'],payload['password'],payload['data_nascimento'])
+    values2 = (int (payload['cc']),payload['medical_record'])
     try:
         cur.execute("SELECT nome FROM use WHERE nome = %s",(payload['nome'],))
         existing_user = cur.fetchone()
@@ -101,8 +103,89 @@ def registration():
             conn.close()
     return flask.jsonify(response)
 
-
+# User authentication
+@app.route('/MeDEIsync_DB/user',methods = ['PUT'])
+def authentication():
+    logger.info('PUT http://localhost:8080/MeDEIsync_DB/user')
     
+    payload = flask.request.get_json()
+    
+    
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.debug(f'PUT http://localhost:8080/MeDEIsync_DB/user - payload - {payload}')
+
+    jwt_payload = {}
+
+    if 'username' not in payload or 'password' not in payload:
+        response = {'status': StatusCodes['api_error'], 'results': 'Insira password e username.'}
+        conn.close()
+        return flask.jsonify(response)
+    
+    try:
+        cur.execute("SELECT cc FROM use WHERE nome = %s AND password = %s",(payload['username'],payload['password']))
+        existing_user = cur.fetchone()
+
+        if existing_user:
+            # verifica o tipo de utilizador
+            funcao =  role(existing_user,cur)
+
+            # encodifica no token o tipo e o cc de quem fez login
+            jwt_payload['funcao'] = funcao
+            jwt_payload['user_id'] = existing_user[0]
+            
+            # duracao do login definida em segundos (10 minutos)
+            duracao_token = 600
+            
+            tempo_atual = int(time.time())
+            tempo_permitido = tempo_atual + duracao_token
+
+            jwt_payload['duracao_token'] = tempo_permitido
+
+            logger.debug(f'jwt_payload - {jwt_payload}')
+
+            token = jwt.encode(jwt_payload, jwt_key, algorithm = 'HS256')
+
+            response = {'status': StatusCodes['success'], 'results':f"{token}"}
+        else:
+            response = {'status' : StatusCodes['api_error'],'results': 'Credenciais incorretas'}
+            conn.close()
+            return flask.jsonify(response)
+    except(Exception, psycopg2.DatabaseError) as error:
+        logger.error(error)
+        response = {
+            'status': StatusCodes['internal_error'], 'errors': str(error)
+        }
+        conn.rollback()
+    finally:
+        if conn is not None:
+            conn.close()
+    return flask.jsonify(response)
+
+
+def role(cc,cur):
+    # check if patient
+    cur.execute("SELECT use_cc FROM patient WHERE use_cc = %s",cc)
+    if cur.fetchone():
+        return "patient"
+    
+    #check if doctor
+    cur.execute("SELECT use_cc FROM doctor WHERE use_cc = %s",cc)
+    if cur.fetchone():
+        return "doctor"
+    
+    #check if nurse
+    cur.execute("SELECT use_cc FROM nurse WHERE use_cc = %s", cc)
+    if cur.fetchone():
+        return "nurse"
+    
+    #check if assistant
+    cur.execute("SELECT use_cc FROM assistant WHERE use_cc = %s",cc)
+    if cur.fetchone():
+        return "assistant"
+
+
 if __name__ == "__main__":
     host = '127.0.0.1'
     port = 8080

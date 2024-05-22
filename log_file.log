@@ -130,3 +130,6 @@ INFO:werkzeug: * Debugger PIN: 414-218-023
 INFO:logger:POST /MeDEIsync_DB/user/registration/patient
 DEBUG:logger:POST /MeDEIsync_DB/user/registration/patient - payload: {payload}
 INFO:werkzeug:127.0.0.1 - - [21/May/2024 17:49:53] "POST /MeDEIsync_DB/user/registration/patient HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/user/registration/patient
+DEBUG:logger:POST /MeDEIsync_DB/user/registration/patient - payload: {payload}
+INFO:werkzeug:127.0.0.1 - - [21/May/2024 18:10:33] "POST /MeDEIsync_DB/user/registration/patient HTTP/1.1" 200 -
