@@ -46,6 +46,8 @@ def landing_page():
     Bem-vindo!<br/>
 """
 
+#adicionar ao employee colunas - salário, start date, contract(este fica para informações adicionais)
+
 # register patient
 @app.route('/MeDEIsync_DB/user/register/patient', methods =['POST'])
 def patient_registration():
@@ -161,6 +163,68 @@ def authentication():
     finally:
         if conn is not None:
             conn.close()
+    return flask.jsonify(response)
+
+
+#Schedule Appointment
+
+###### IMPORTANTE -> para testar este endpoint é necessário adicionar uma nova bill devido a constraints, ou então implementar o que está em baixo.
+'''
+Falta criar o trigger para a bill
+bill pede o nif (do paciente)
+'''
+@app.route('/MeDEIsync_DB/appointment', methods= ['POST'])
+def schedule_appointment():
+    logger.info('POST /MeDEIsync_DB/appointment')
+    payload = flask.request.get_json()
+
+    logger.debug(f'POST /MeDEIsync_DB/appointment - payload: {payload}')
+
+    #appointment_nurse opcional
+    if 'doctor_cc' not in payload or 'date' not in payload or 'type' not in payload or 'price' not in payload:
+        response = {'status': StatusCodes['api_error'], 'results': 'payload should be have: doctor_cc - date - type - price'}
+        return flask.jsonify(response)
+    
+
+    jwt_token = flask.request.headers.get('Authorization')
+    jwt_token = jwt_token.split('Bearer ')[1]   #remove extra characters
+    decode = jwt.decode(jwt_token,jwt_key,algorithms = ['HS256'])
+    
+    current_time = int(time.time())
+    
+    if decode['funcao'] != 'patient':
+        response = {'status': StatusCodes['api_error'], 'results': 'Must be a patient to use this endpoint.'}
+        return flask.jsonify(response)
+    
+    if current_time > decode['duracao_token']:
+        response = {'status': StatusCodes['api_error'], 'results': 'tempo de sessão expirou, obtenha novo token.'}
+        return flask.jsonify(response)
+    statement = 'INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc,bill_id) VALUES (%s,%s,%s,%s)'
+    values = (payload['date'],int(decode['user_id']),int(payload['doctor_cc']),1)
+    conn = db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute('SELECT (employee_use_cc) FROM doctor WHERE employee_use_cc = %s',(payload['doctor_cc'],))
+        doc = cur.fetchone()
+        if doc:
+            pass
+        else:
+            response = {'status': StatusCodes['api_error'], 'results': 'The doctor_cc you inserted does not exist.'}
+            return flask.jsonify(response)
+        cur.execute("BEGIN TRANSACTION")
+        cur.execute(statement,values)
+        conn.commit()
+        response = {'status': StatusCodes['success'], 'results': 'token obtido!'}
+    
+    except(Exception,psycopg2.DatabaseError)as error:
+        logger.error(f'POST /MeDEIsync_DB/appointment - error: {error}')
+        response = {'status': StatusCodes['internal_error'], 'errors': str(error)}
+
+        conn.rollback()
+    finally:
+        if conn is not None:
+            conn.close()
+
     return flask.jsonify(response)
 
 

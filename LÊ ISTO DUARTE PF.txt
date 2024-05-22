@@ -1,0 +1,4 @@
+ESTE DOCUMENTO SERVE PARA IRMOS DIZENDO MERDAS UM AO OUTRO SOBRE CENAS QUE MUDAMOS/ É PRECISO MUDAR
+
+- no enunciado são os médicos que fazem as consultas(appointments), vou mudar essa relação no ER e metê-lo aqui
+- comecei a fazer a cena do jwt token (autenticação), depois explico te como se usa isso, manda dm ou liga ou assim.
