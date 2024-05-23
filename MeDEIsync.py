@@ -42,7 +42,8 @@ logger.addHandler(ch)
 
 @app.route('/')
 def landing_page():
-    add_bill(4567,2)
+    temporary_insert()
+    #add_bill(4567,2)
     return"""
     Bem-vindo!<br/>
 """
@@ -50,17 +51,17 @@ def landing_page():
 #adicionar ao employee colunas - salário, start date, contract(este fica para informações adicionais)
 
 # register patient
-@app.route('/MeDEIsync_DB/user/register/patient', methods =['POST'])
+@app.route('/MeDEIsync_DB/register/patient', methods =['POST'])
 def patient_registration():
 
-    logger.info('POST /MeDEIsync_DB/user/register/patient')
+    logger.info('POST /MeDEIsync_DB/register/patient')
     
     payload = flask.request.get_json()
 
     conn = db_connection()
     cur = conn.cursor()
 
-    logger.debug(f'POST /MeDEIsync_DB/user/registration/patient - payload: {payload}')
+    logger.debug(f'POST /MeDEIsync_DB/registration/patient - payload: {payload}')
 
 
     if 'nome'not in payload or 'email' not in payload or 'password' not in payload or 'data_nascimento' not in payload or 'cc' not in payload  or 'n_utente' not in payload or 'nib' not in payload or 'medical_record' not in payload:
@@ -107,17 +108,17 @@ def patient_registration():
     return flask.jsonify(response)
 
 # register assistant
-@app.route('/MeDEIsync_DB/user/register/assistant', methods =['POST'])
+@app.route('/MeDEIsync_DB/register/assistant', methods =['POST'])
 def assistant_registration():
 
-    logger.info('POST /MeDEIsync_DB/user/register/assistant')
+    logger.info('POST /MeDEIsync_DB/register/assistant')
     
     payload = flask.request.get_json()
 
     conn = db_connection()
     cur = conn.cursor()
 
-    logger.debug(f'POST /MeDEIsync_DB/user/registration/assistant - payload: {payload}')
+    logger.debug(f'POST /MeDEIsync_DB/registration/assistant - payload: {payload}')
 
 
     if 'nome'not in payload or 'email' not in payload or 'password' not in payload or 'data_nascimento' not in payload or 'cc' not in payload  or 'n_utente' not in payload or 'nib' not in payload or 'contract' not in payload or 'field_0' not in payload:
@@ -169,17 +170,17 @@ def assistant_registration():
 
 
 # register nurse
-@app.route('/MeDEIsync_DB/user/register/nurse', methods =['POST'])
+@app.route('/MeDEIsync_DB/register/nurse', methods =['POST'])
 def nurse_registration():
 
-    logger.info('POST /MeDEIsync_DB/user/register/nurse')
+    logger.info('POST /MeDEIsync_DB/register/nurse')
     
     payload = flask.request.get_json()
 
     conn = db_connection()
     cur = conn.cursor()
 
-    logger.debug(f'POST /MeDEIsync_DB/user/registration/nurse - payload: {payload}')
+    logger.debug(f'POST /MeDEIsync_DB/registration/nurse - payload: {payload}')
 
 
     if 'nome'not in payload or 'email' not in payload or 'password' not in payload or 'data_nascimento' not in payload or 'cc' not in payload  or 'n_utente' not in payload or 'nib' not in payload or 'contract' not in payload or 'internal_hierarchy' not in payload:
@@ -232,17 +233,17 @@ def nurse_registration():
 
 
 # register doctor
-@app.route('/MeDEIsync_DB/user/register/doctor', methods =['POST'])
+@app.route('/MeDEIsync_DB/register/doctor', methods =['POST'])
 def doctor_registration():
 
-    logger.info('POST /MeDEIsync_DB/user/register/doctor')
+    logger.info('POST /MeDEIsync_DB/register/doctor')
     
     payload = flask.request.get_json()
 
     conn = db_connection()
     cur = conn.cursor()
 
-    logger.debug(f'POST /MeDEIsync_DB/user/registration/doctor - payload: {payload}')
+    logger.debug(f'POST /MeDEIsync_DB/use/registration/doctor - payload: {payload}')
 
 
     if 'nome'not in payload or 'email' not in payload or 'password' not in payload or 'data_nascimento' not in payload or 'cc' not in payload  or 'n_utente' not in payload or 'nib' not in payload or 'contract' not in payload or 'medical_license' not in payload or 'main_specialization' not in payload:
@@ -514,9 +515,8 @@ def get_prescriptions(person_id):
 
 #get top3
 @app.route('/MeDEIsync_DB/top3', methods=['GET'])
-def get_prescriptions(person_id):
+def get_top3():
     logger.info(f'GET /MeDEIsync_DB/top3')
-    logger.debug(f'person_id: {person_id}')
 
     jwt_token = flask.request.headers.get('Authorization')
     if not jwt_token:
@@ -577,7 +577,7 @@ def get_prescriptions(person_id):
 #daily summary
 #falta meter a query, tive que alterar o ER para cada appointement, prescription, etc terem data
 @app.route('/MeDEIsync_DB/daily/<data_dia>', methods=['GET'])
-def get_prescriptions(person_id):
+def daily_summary():
     logger.info(f'GET /MeDEIsync_DB/daily/<data_dia>')
     logger.debug(f'person_id: {person_id}')
 
@@ -686,6 +686,66 @@ def schedule_surgery_no_hospitalization():
             conn.close()
     return flask.jsonify(response)
 
+@app.route('/MeDEIsync_DB/surgery/<hospitalization_id>', methods = ['POST'])
+def schedule_surgery(h_id):
+    logger.info('POST /MeDEIsync_DB/surgery')
+
+    jwt_token = flask.request.headers.get('Authorization')
+    jwt_token = jwt_token.split('Bearer ')[1]   #remove extra characters
+    decode = jwt.decode(jwt_token,jwt_key,algorithms = ['HS256'])
+
+    
+    if time_up(decode['duracao_token']) != 0:
+        response = time_up(decode['duracao_token'])
+        return flask.jsonify(response)
+
+    if decode['funcao'] != 'assistant':
+        response = {'status': StatusCodes['api_error'],'results': 'Only assistants allowed to schedule surgeries.'}
+        return flask.jsonify(response)
+    
+    payload = flask.request.get_json()
+    logger.debug(f'POST /MeDEIsync_DB/surgery - payload:{payload}')
+
+    if 'patient_id' not in payload or 'doctor' not in payload or  'nurses' not in payload or 'date' not in payload or 'duration' not in payload or 'result' not in payload:
+        response = {'status': StatusCodes['api_error'], 'results': 'payload should be: patient_id - doctor - nurses - date.'}
+        return flask.jsonify(response)
+    surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
+
+    surgery_nurses = 'INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)'
+
+    conn = db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute("BEGIN TRANSACTION")
+        print(h_id)
+        cur.execute('SELECT id FROM hospitalization WHERE id = %s',h_id)
+        i = cur.fetchone()
+        if cur:
+            pass
+        else:
+            response = {'status': StatusCodes['api_error'], 'error': 'hospitalization id is not correct.'}
+            conn.close()
+            return flask.jsonify(response)
+        surg_values = (payload['date'],int(payload['duration']),payload['result'],h_id)
+        cur.execute(surgery,surg_values)
+        surg_id = cur.fetchone()
+        surg_id = surg_id[0]
+
+        for row in payload['nurses']:
+            nurses_values = (row[1],row[0],surg_id)
+            cur.execute(surgery_nurses,nurses_values)
+        conn.commit()
+
+        response = {'status': StatusCodes['success'],
+                    'results': f'"hospitalization_id": {h_id}, "surgery_id":{surg_id}, "patient_id": {payload["patient_id"]}, "date": {payload["date"]}'}
+    except (Exception,psycopg2.DatabaseError) as error:
+        logger.error(f'')
+        response = {'status': StatusCodes['internal_error'],
+                    'error': str(error)}
+    finally:
+        if conn is not None:
+            conn.close()
+    return flask.jsonify(response)
 
 #execute payment
 @app.route('/MeDEIsync_DB/bills/<bill_id>', methods =  ['POST'])
@@ -752,6 +812,169 @@ def payment(bill_id):
             conn.close()
     return flask.jsonify(response)
 
+
+#add prescription
+#adidcionar a frequencia
+@app.route('/MeDEIsync_DB/prescription', methods = ['POST'])
+def add_prescription():
+    logger.info('POST /MeDEIsync_DB/prescription')
+    jwt_token = flask.request.headers.get('Authorization')
+    jwt_token = jwt_token.split('Bearer ')[1]   #remove extra characters
+    decode = jwt.decode(jwt_token,jwt_key,algorithms = ['HS256'])
+
+    if time_up(decode['duracao_token']) != 0:
+        response = time_up(decode['duracao_token'])
+        return flask.jsonify(response)
+    
+    if decode['funcao'] != 'doctor':
+        response = {'status':StatusCodes['api_error'], "error":'Only patients can pay their own bills'}
+
+    payload = flask.request.get_json()
+    if 'type' not in payload or 'event_id' not in payload or 'validity' not in payload or 'medicines' not in payload or 'patient_id' not in payload:
+        response = {'status': StatusCodes['api_error'], 'error': 'payload should contain: type - event_id - validity - medicines {"medcine": "medicine_name","posology_dose": value,"posology_frequency": value}'}
+        return flask.jsonify(response)
+    logger.debug(f'POST /MeDEIsync_DB/prescription - error: {payload}')
+
+    conn = db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute("BEGIN TRANSACTION")
+        cur.execute('SELECT medical_record FROM patient where use_cc = %s', (int(payload['patient_id']),))
+        medical_record = cur.fetchone()
+        if medical_record:
+            pass
+        else:
+            response = {'status':StatusCodes['api_error'], 'error': 'Couldnt find patient'}
+            conn.close()
+            return flask.jsonify(response)
+        
+        if payload['type'] == 'hospitalization':
+            cur.execute('SELECT id FROM hospitalization WHERE id = %s',(payload['event_id'],))
+            hosp = cur.fetchone()
+            if cur:
+                pass
+            else:
+                response = {'status':StatusCodes['api_error'], 'error': 'Error in event_id'}
+                conn.close()
+                return flask.jsonify(response)
+            
+            cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(decode['user_id'],payload['patient_id'],payload['validity']))
+            presc_id = cur.fetchone()
+            
+            for row in payload['medicines']:
+                cur.execute('SELECT id FROM medication WHERE name = %s',(row['medicine'],))
+                med_id = cur.fetchone()
+                
+                if med_id:
+                    cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(row['dosage'],med_id[0],row['frequency'],presc_id[0]))
+                
+                else:
+                    response = {'status':StatusCodes['api_error'],'error': f"couldn't find medicine {row['medicine']}"}
+                    conn.rollback()
+                    conn.close()
+                    return flask.jsonify(response)
+            
+            cur.execute('INSERT INTO hospitalization_prescription (hospitalization_id,prescription_id) VALUES(%s,%s)', (hosp[0],presc_id[0]))
+            conn.commit()
+            response = {'status':StatusCodes['success'], 'success': f'prescription added!!  prescription_id - {presc_id[0] }'}
+        
+        elif payload['type'] == 'appointment':
+            cur.execute('SELECT id from appointment WHERE id = %s',(payload['event_id'],))
+            appo = cur.fetchone()
+            if cur:
+                pass
+            else:
+                response = {'status':StatusCodes['api_error'], 'error': 'Error in event_id'}
+                conn.close()
+                return flask.jsonify(response)
+            
+            cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(decode['user_id'],payload['patient_id'],payload['validity']))
+            presc_id = cur.fetchone()
+            
+            for row in payload['medicines']:
+                cur.execute('SELECT id FROM medication WHERE name = %s',(row['medicine'],))
+                med_id = cur.fetchone()
+                
+                if med_id:
+                    cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(row['dosage'],med_id[0],row['frequency'],presc_id[0]))
+                
+                else:
+                    response = {'status':StatusCodes['api_error'],'error': f"couldn't find medicine {row['medicine']}"}
+                    conn.rollback()
+                    conn.close()
+                    return flask.jsonify(response)
+            cur.execute('INSERT INTO prescription_appointment (appointment_id,prescription_id), VALUES(%d,%d)',(appo[0],presc_id[0]))
+            conn.commit()
+            response = {'status':StatusCodes['success'], 'success': f'prescription added!!  prescription_id - {presc_id[0]}'}
+
+        else:
+            response = {'status':StatusCodes['api_error'], 'error': 'type not valid.'}
+            conn.close()
+            return flask.jsonify(response)
+
+    except(Exception,psycopg2.DatabaseError) as error:
+        logger.error(f'POST /MeDEIsync_DB/prescription - error:{payload}')
+        response = {'status': StatusCodes['internal_error'],'errors': str(error)}
+        conn.rollback()
+    finally:
+        if conn is not None:
+            conn.close()
+    return flask.jsonify(response)
+
+
+# À partida funciona agora para testar temos que adicionar cenas com força
+#Generate monthly report
+@app.route('/MeDEIsync_DB/report',methods = ['GET'])
+def report():
+    logger.info('MeDEIsync_DB/report')
+    jwt_token = flask.request.headers.get('Authorization')
+    jwt_token = jwt_token.split('Bearer ')[1]   #remove extra characters
+    decode = jwt.decode(jwt_token,jwt_key,algorithms = ['HS256'])
+
+    if time_up(decode['duracao_token']) != 0:
+        response = time_up(decode['duracao_token'])
+        return flask.jsonify(response)
+    conn = db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute('''WITH surgery_counts AS (
+    SELECT
+        ds.doctor_employee_use_cc,
+        TO_CHAR(s.surgery_date, 'YYYY-MM') AS month,
+        COUNT(*) AS surgeries_count,
+        ROW_NUMBER() OVER (PARTITION BY TO_CHAR(s.surgery_date, 'YYYY-MM') ORDER BY COUNT(*) DESC) AS rn
+    FROM
+        surgery s
+    JOIN
+        doctor_surgery ds ON s.id = ds.surgery_id
+    WHERE
+        s.surgery_date >= (CURRENT_DATE - INTERVAL '12 months')
+    GROUP BY
+        ds.doctor_employee_use_cc,
+        TO_CHAR(s.surgery_date, 'YYYY-MM')
+)
+SELECT
+    doctor_employee_use_cc,
+    month,
+    surgeries_count
+FROM
+    surgery_counts
+WHERE
+    rn = 1
+ORDER BY
+    month;''')
+        t = cur.fetchall()
+        response = {'status': StatusCodes['success'], 'success': f'results {t}'}
+    except(Exception,psycopg2.DatabaseError) as error:
+        logger.debug(f'/MeDEIsync_DB/report error - {error}')
+        response = {'status':StatusCodes['internal_error'],'error': str(error)}
+    finally:
+        if conn is not None:
+            conn.close()
+    return flask.jsonify(response)
+
+
+
 def role(cc,cur):
     # check if patient
     cur.execute("SELECT use_cc FROM patient WHERE use_cc = %s",cc)
@@ -785,34 +1008,44 @@ def time_up(token):
 def temporary_insert():
     conn = db_connection()
     cur = conn.cursor()
+    try:
+        cur.execute("BEGIN TRANSACTION")
+        cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(1234,'doctor1',1234,'2003-01-11',1423))
+        cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (1234,'yolo'))
+        cur.execute("INSERT INTO doctor(employee_use_cc,medical_license,main_specialization) VALUES(%s,%s,%s)",(1234,'uc','neuroscience'))
 
-    cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(1234,'doctor1',1234,'2003-01-11',1423))
-    cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (1234,'yolo'))
-    cur.execute("INSERT INTO doctor(employee_use_cc,medical_license,main_specialization) VALUES(%s,%s,%s)",(1234,'uc','neuroscience'))
-
-    
-    cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)",('fatima', 'fatima@gmail.com','pass_da?fatima','2000-04-11',987654321,412354235,"PT0987125769"))
-    cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (2345,'yolo'))
-    cur.execute("INSERT INTO nurse(employee_use_cc,internal_hierarchy) VALUES(%s,%s)",(2345,'chief_nurse'))
+        
+        cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)",('fatima', 'fatima@gmail.com','pass_da?fatima','2000-04-11',2345,412354235,"PT0987125769"))
+        cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (2345,'yolo'))
+        cur.execute("INSERT INTO nurse(employee_use_cc,internal_hierarchy) VALUES(%s,%s)",(2345,'chief_nurse'))
 
 
-    
-    cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(3456,'assistant1',1234,'2003-01-11',324))
-    cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (3456,'yolo'))
-    cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(3456,2))
+        
+        cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(3456,'assistant1',1234,'2003-01-11',324))
+        cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (3456,'yolo'))
+        cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(3456,2))
 
-    
-    cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)",('jesus', 'jesus@gmail.com','pass_do?jesus','1950-10-20',887766554,9864218,"PT09832176812345"))
-    cur.execute("INSERT INTO patient(use_cc,medical_record) VALUES(%s,%s)",(4567,'yolo'))
-    conn.commit()
-    conn.close()
-    return 1
+        
+        cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)",('jesus', 'jesus@gmail.com','pass_do?jesus','1950-10-20',4567,9864218,"PT09832176812345"))
+        cur.execute("INSERT INTO patient(use_cc,medical_record) VALUES(%s,%s)",(4567,'yolo'))
+        conn.commit()
+        conn.close()
+        response = {'status': StatusCodes['internal_error'], 'success':'yey!'}
+    except(Exception,psycopg2.DatabaseError)as error:
+        logger.debug(f'start - error{error}')
+        response = {'status':StatusCodes['internal_error'],'errors': str(error)}
+        conn.rollback()
+    finally:
+        if conn is not None:
+            conn.close()
+    return flask.jsonify(response)
 
 def add_bill(user_id,bill_ammount):
     conn = db_connection()
     cur = conn.cursor()
 
-    cur.execute("INSERT INTO bill (nif,ammount_inic,patient_use_cc,status,ammount_left) VALUES(%s,%s,%s,%s,%s)",(bill_ammount,bill_ammount,user_id,'to_pay',bill_ammount))
+    values = ('2024-05-23',id,3456,2345,4567)
+    cur.execute("INSERT INTO hospitalization(data_inic,bill_id,assistant_employee_use_cc,nurse_employee_use_cc,patient_use_cc) VALUES(%s,%s,%s,%s,%s)", values)
     conn.commit()
     conn.close()
     return 1
