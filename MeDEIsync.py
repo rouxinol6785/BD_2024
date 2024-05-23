@@ -63,7 +63,7 @@ def patient_registration():
     logger.debug(f'POST /MeDEIsync_DB/user/registration/patient - payload: {payload}')
 
 
-    if 'cc'not in payload or 'nome' not in payload or 'password' not in payload or 'data_nascimento' not in payload  or 'medical_record' not in payload:
+    if 'nome'not in payload or 'email' not in payload or 'password' not in payload or 'data_nascimento' not in payload or 'cc' not in payload  or 'n_utente' not in payload or 'nib' not in payload or 'medical_record' not in payload:
         response = {
             'status': StatusCodes['api_error'], 'results':'Missing required fields'
         }
@@ -73,13 +73,13 @@ def patient_registration():
     #para fazer o ID o melhor é fazer o autoincrement da base de dados
     id = random.randint(0,30)
 
-    statement = 'INSERT INTO use (cc,nome,password,data_nascimento) VALUES(%s,%s,%s,%s)'
+    statement = 'INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)'
     statemnt2 = 'INSERT INTO patient (use_cc, medical_record) VALUES(%s,%s)'
 
-    values = (int (payload['cc']),payload['nome'],payload['password'],payload['data_nascimento'])
+    values = (payload['nome'],payload['email'],payload['password'],payload['data_nascimento'],int(payload['cc']), int(payload['n_utente']), payload['nib'])
     values2 = (int (payload['cc']),payload['medical_record'])
     try:
-        cur.execute("SELECT nome FROM use WHERE nome = %s",(payload['nome'],))
+        cur.execute("SELECT nome FROM use WHERE cc = %s",(payload['cc'],))
         existing_user = cur.fetchone()
         if existing_user:
             response ={
@@ -93,10 +93,195 @@ def patient_registration():
             cur.execute(statemnt2,values2)
             conn.commit()
             response = {
-                'status': StatusCodes['success'], 'results': f'Paciente {payload['nome']} inserido!'
+                'status': StatusCodes['success'], 'results': f"Paciente {payload['nome']} inserido!"
             }
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(f'POST /MeDEIsync_DB/registration/patient - error: {error}')
+        response = {
+            'status': StatusCodes['internal_error'], 'errors': str(error)
+        }
+        conn.rollback()
+    finally:
+        if conn is not None:
+            conn.close()
+    return flask.jsonify(response)
+
+# register assistant
+@app.route('/MeDEIsync_DB/user/register/assistant', methods =['POST'])
+def assistant_registration():
+
+    logger.info('POST /MeDEIsync_DB/user/register/assistant')
+    
+    payload = flask.request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.debug(f'POST /MeDEIsync_DB/user/registration/assistant - payload: {payload}')
+
+
+    if 'nome'not in payload or 'email' not in payload or 'password' not in payload or 'data_nascimento' not in payload or 'cc' not in payload  or 'n_utente' not in payload or 'nib' not in payload or 'contract' not in payload or 'field_0' not in payload:
+        response = {
+            'status': StatusCodes['api_error'], 'results':'Missing required fields'
+        }
+        conn.close()
+        return flask.jsonify(response)
+    
+    #para fazer o ID o melhor é fazer o autoincrement da base de dados
+    id = random.randint(0,30)
+
+    statement = 'INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)'
+    statemnt2 = 'INSERT INTO employee (use_cc, contract) VALUES(%s,%s)'
+    statemnt3 = 'INSERT INTO assistant (employee_use_cc, field_0) VALUES(%s,%s)'
+
+    values = (payload['nome'],payload['email'],payload['password'],payload['data_nascimento'],int(payload['cc']), int(payload['n_utente']), payload['nib'])
+    values2 = (int (payload['cc']),payload['contract'])
+    values3 = (int (payload['cc']),int(payload['field_0']))
+    try:
+        cur.execute("SELECT nome FROM use WHERE cc = %s",(payload['cc'],))
+        existing_user = cur.fetchone()
+        if existing_user:
+            response ={
+                'status' : StatusCodes['api_error'], 'results': 'Assistente já está na base de dados'}
+            conn.close()
+            return flask.jsonify(response)
+        else:
+            #isto sempre no início das transações, se der merda a meio podemos fazer rollback e volta a como estava aqui
+            cur.execute("BEGIN TRANSACTION")
+            cur.execute(statement,values)
+            cur.execute(statemnt2,values2)
+            cur.execute(statemnt3,values3)
+            conn.commit()
+            response = {
+                'status': StatusCodes['success'], 'results': f"Assistente {payload['nome']} inserido!"
+            }
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(f'POST /MeDEIsync_DB/registration/assistant - error: {error}')
+        response = {
+            'status': StatusCodes['internal_error'], 'errors': str(error)
+        }
+        conn.rollback()
+    finally:
+        if conn is not None:
+            conn.close()
+    return flask.jsonify(response)
+
+
+
+# register nurse
+@app.route('/MeDEIsync_DB/user/register/nurse', methods =['POST'])
+def nurse_registration():
+
+    logger.info('POST /MeDEIsync_DB/user/register/nurse')
+    
+    payload = flask.request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.debug(f'POST /MeDEIsync_DB/user/registration/nurse - payload: {payload}')
+
+
+    if 'nome'not in payload or 'email' not in payload or 'password' not in payload or 'data_nascimento' not in payload or 'cc' not in payload  or 'n_utente' not in payload or 'nib' not in payload or 'contract' not in payload or 'internal_hierarchy' not in payload:
+        response = {
+            'status': StatusCodes['api_error'], 'results':'Missing required fields'
+        }
+        conn.close()
+        return flask.jsonify(response)
+    
+    #para fazer o ID o melhor é fazer o autoincrement da base de dados
+    id = random.randint(0,30)
+
+    statement = 'INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)'
+    statemnt2 = 'INSERT INTO employee (use_cc, contract) VALUES(%s,%s)'
+    statemnt3 = 'INSERT INTO nurse (employee_use_cc, internal_hierarchy) VALUES(%s,%s)'
+
+    values = (payload['nome'],payload['email'],payload['password'],payload['data_nascimento'],int(payload['cc']), int(payload['n_utente']), payload['nib'])
+    values2 = (int (payload['cc']),payload['contract'])
+    values3 = (int (payload['cc']),payload['internal_hierarchy'])
+    try:
+        cur.execute("SELECT nome FROM use WHERE cc = %s",(payload['cc'],))
+        existing_user = cur.fetchone()
+        if existing_user:
+            response ={
+                'status' : StatusCodes['api_error'], 'results': 'Enfermeir@ já está na base de dados'}
+            conn.close()
+            return flask.jsonify(response)
+        else:
+            #isto sempre no início das transações, se der merda a meio podemos fazer rollback e volta a como estava aqui
+            cur.execute("BEGIN TRANSACTION")
+            cur.execute(statement,values)
+            cur.execute(statemnt2,values2)
+            cur.execute(statemnt3,values3)
+            conn.commit()
+            response = {
+                'status': StatusCodes['success'], 'results': f"Enfermeir@ {payload['nome']} inserid@!"
+            }
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(f'POST /MeDEIsync_DB/registration/nurse - error: {error}')
+        response = {
+            'status': StatusCodes['internal_error'], 'errors': str(error)
+        }
+        conn.rollback()
+    finally:
+        if conn is not None:
+            conn.close()
+    return flask.jsonify(response)
+
+
+
+
+# register doctor
+@app.route('/MeDEIsync_DB/user/register/doctor', methods =['POST'])
+def doctor_registration():
+
+    logger.info('POST /MeDEIsync_DB/user/register/doctor')
+    
+    payload = flask.request.get_json()
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    logger.debug(f'POST /MeDEIsync_DB/user/registration/doctor - payload: {payload}')
+
+
+    if 'nome'not in payload or 'email' not in payload or 'password' not in payload or 'data_nascimento' not in payload or 'cc' not in payload  or 'n_utente' not in payload or 'nib' not in payload or 'contract' not in payload or 'medical_license' not in payload or 'main_specialization' not in payload:
+        response = {
+            'status': StatusCodes['api_error'], 'results':'Missing required fields'
+        }
+        conn.close()
+        return flask.jsonify(response)
+    
+    #para fazer o ID o melhor é fazer o autoincrement da base de dados
+    id = random.randint(0,30)
+
+    statement = 'INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)'
+    statemnt2 = 'INSERT INTO employee (use_cc, contract) VALUES(%s,%s)'
+    statemnt3 = 'INSERT INTO doctor (employee_use_cc, medical_license, main_specialization) VALUES(%s,%s,%s)'
+
+    values = (payload['nome'],payload['email'],payload['password'],payload['data_nascimento'],int(payload['cc']), int(payload['n_utente']), payload['nib'])
+    values2 = (int (payload['cc']),payload['contract'])
+    values3 = (int (payload['cc']),payload['medical_license'], payload['main_specialization'])
+    try:
+        cur.execute("SELECT nome FROM use WHERE cc = %s",(payload['cc'],))
+        existing_user = cur.fetchone()
+        if existing_user:
+            response ={
+                'status' : StatusCodes['api_error'], 'results': 'Médic@ já está na base de dados'}
+            conn.close()
+            return flask.jsonify(response)
+        else:
+            #isto sempre no início das transações, se der merda a meio podemos fazer rollback e volta a como estava aqui
+            cur.execute("BEGIN TRANSACTION")
+            cur.execute(statement,values)
+            cur.execute(statemnt2,values2)
+            cur.execute(statemnt3,values3)
+            conn.commit()
+            response = {
+                'status': StatusCodes['success'], 'results': f"Medic@ {payload['nome']} inserid@!"
+            }
+    except (Exception, psycopg2.DatabaseError) as error:
+        logger.error(f'POST /MeDEIsync_DB/registration/doctor - error: {error}')
         response = {
             'status': StatusCodes['internal_error'], 'errors': str(error)
         }
@@ -444,7 +629,7 @@ def temporary_insert():
     cur.execute("INSERT INTO doctor(employee_use_cc,medical_license,main_specialization) VALUES(%s,%s,%s)",(1234,'uc','neuroscience'))
 
     
-    cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(2345,'nurse1',1234,'2003-01-11',324))
+    cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)",('fatima', 'fatima@gmail.com','pass_da?fatima','2000-04-11',987654321,412354235,"PT0987125769"))
     cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (2345,'yolo'))
     cur.execute("INSERT INTO nurse(employee_use_cc,internal_hierarchy) VALUES(%s,%s)",(2345,'chief_nurse'))
 
@@ -455,7 +640,7 @@ def temporary_insert():
     cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(3456,2))
 
     
-    cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(4567,'patient1',1234,'2003-01-11',324))
+    cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)",('jesus', 'jesus@gmail.com','pass_do?jesus','1950-10-20',887766554,9864218,"PT09832176812345"))
     cur.execute("INSERT INTO patient(use_cc,medical_record) VALUES(%s,%s)",(4567,'yolo'))
     conn.commit()
     conn.close()
