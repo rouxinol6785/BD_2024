@@ -573,6 +573,56 @@ def get_prescriptions(person_id):
 
 
 
+
+#daily summary
+#falta meter a query, tive que alterar o ER para cada appointement, prescription, etc terem data
+@app.route('/MeDEIsync_DB/daily/<data_dia>', methods=['GET'])
+def get_prescriptions(person_id):
+    logger.info(f'GET /MeDEIsync_DB/daily/<data_dia>')
+    logger.debug(f'person_id: {person_id}')
+
+    jwt_token = flask.request.headers.get('Authorization')
+    if not jwt_token:
+        return flask.jsonify({'status': 'error', 'message': 'Authorization header is missing'}), 401
+
+    try:
+        jwt_token = jwt_token.split('Bearer ')[1]  # Remove extra characters
+        decode = jwt.decode(jwt_token, jwt_key, algorithms=['HS256'])
+    except Exception as e:
+        logger.error(f'JWT decode error: {e}')
+        return flask.jsonify({'status': 'error', 'message': 'Invalid token'}), 401
+
+    if time_up(decode['duracao_token']) != 0:
+        response = time_up(decode['duracao_token'])
+        return flask.jsonify(response), 401
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    if decode['funcao'] == 'assistant':
+        try:
+            cur.execute('''
+                
+            ''')
+            rows = cur.fetchall()
+            if rows:
+                response = {'status': 'success', 'results': rows}
+            else:
+                response = {'status': 'success', 'results': 'No prescriptions for this user'}
+                
+        except (Exception, psycopg2.DatabaseError) as error:
+            logger.error(f'GET /MeDEIsync_DB/daily/<data_dia> - error: {error}')
+            response = {'status': 'internal_error', 'error': str(error)}
+        finally:
+            if conn is not None:
+                conn.close()
+    else:
+        response = {'status': 'api_error', 'message': 'User not allowed to perform this action.'}
+        
+    return flask.jsonify(response)
+
+
+
 #schedule surgery, hospitalization not provided
 # FALTA bill update/create -> triggers
 # alter results -> its a schedule not a log
