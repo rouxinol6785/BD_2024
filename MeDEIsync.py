@@ -190,15 +190,16 @@ def schedule_appointment():
     jwt_token = jwt_token.split('Bearer ')[1]   #remove extra characters
     decode = jwt.decode(jwt_token,jwt_key,algorithms = ['HS256'])
     
-    current_time = int(time.time())
+    if time_up(decode['duracao_token']) != 0:
+        response = time_up(decode['duracao_token'])
+        return flask.jsonify(response)
     
+
     if decode['funcao'] != 'patient':
         response = {'status': StatusCodes['api_error'], 'results': 'Must be a patient to use this endpoint.'}
         return flask.jsonify(response)
     
-    if current_time > decode['duracao_token']:
-        response = {'status': StatusCodes['api_error'], 'results': 'tempo de sessão expirou, obtenha novo token.'}
-        return flask.jsonify(response)
+   
     statement = 'INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc,bill_id) VALUES (%s,%s,%s,%s)'
     values = (payload['date'],int(decode['user_id']),int(payload['doctor_cc']),1)
     conn = db_connection()
@@ -214,7 +215,7 @@ def schedule_appointment():
         cur.execute("BEGIN TRANSACTION")
         cur.execute(statement,values)
         conn.commit()
-        response = {'status': StatusCodes['success'], 'results': 'token obtido!'}
+        response = {'status': StatusCodes['success'], 'results': 'appointment added!'}
     
     except(Exception,psycopg2.DatabaseError)as error:
         logger.error(f'POST /MeDEIsync_DB/appointment - error: {error}')
@@ -228,6 +229,115 @@ def schedule_appointment():
     return flask.jsonify(response)
 
 
+# feito
+#see appointments
+@app.route('/MeDEIsync_DB/appointments/<patient_id>', methods = ['GET'])
+def see_appointments(patient_id):
+    logger.info('GET MeDEIsync_DB/appointments/<patient_user_id>')
+    logger.debug(f'patient_cc: {patient_id}')
+
+  
+
+    jwt_token = flask.request.headers.get('Authorization')
+    jwt_token = jwt_token.split('Bearer ')[1]   #remove extra characters
+    decode = jwt.decode(jwt_token,jwt_key,algorithms = ['HS256'])
+    
+  
+    if time_up(decode['duracao_token']) != 0:
+        response = time_up(decode['duracao_token'])
+        return flask.jsonify(response)
+    
+    conn = db_connection()
+    cur = conn.cursor()
+    
+    if decode['funcao'] == 'patient' or decode['funcao'] == 'assistant':
+        try:
+            cur.execute('''
+                SELECT u.nome, a.ap_date 
+                FROM appointment AS a
+                LEFT JOIN use AS u 
+                ON a.doctor_employee_use_cc = u.cc 
+                WHERE a.patient_use_cc = %s
+            ''', (patient_id,))            
+            rows = cur.fetchall()
+            if rows:
+                response = {'status':StatusCodes['success'], 'results': rows}
+            else:
+                response = {'status':StatusCodes['success'], 'results': 'No appointments for this user'}
+                
+        except(Exception, psycopg2.DatabaseError) as error:
+            logger.error(f'GET /MeDEIsync_DB/appointments - error: {error}')
+            response = {'status': StatusCodes['internal_error'],'error':str(error)}
+        finally:
+            if conn is not None:
+                conn.close() 
+    else:
+        response = {'status':StatusCodes['api_error'],'results': 'user not allowed to perform this action.'}
+    return flask.jsonify(response)
+
+#schedule surgery, hospitalization not provided
+# FALTA bill update/create -> triggers
+# alter results -> its a schedule not a log
+@app.route('/MeDEIsync_DB/surgery', methods = ['POST'])
+def schedule_surgery_no_hospitalization():
+    logger.info('POST /MeDEIsync_DB/surgery')
+
+    jwt_token = flask.request.headers.get('Authorization')
+    jwt_token = jwt_token.split('Bearer ')[1]   #remove extra characters
+    decode = jwt.decode(jwt_token,jwt_key,algorithms = ['HS256'])
+
+    
+    if time_up(decode['duracao_token']) != 0:
+        response = time_up(decode['duracao_token'])
+        return flask.jsonify(response)
+
+    if decode['funcao'] != 'assistant':
+        response = {'status': StatusCodes['api_error'],'results': 'Only assistants allowed to schedule surgeries.'}
+        return flask.jsonify(response)
+    
+    payload = flask.request.get_json()
+    logger.debug(f'POST /MeDEIsync_DB/surgery - payload:{payload}')
+
+    if 'patient_id' not in payload or 'doctor' not in payload or  'nurses' not in payload or 'date' not in payload or 'duration' not in payload or 'result' not in payload:
+        response = {'status': StatusCodes['api_error'], 'results': 'payload should be: patient_id - doctor - nurses - date.'}
+        return flask.jsonify(response)
+
+    hospitalization = 'INSERT INTO hospitalization (data_inic, bill_id, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s,%s) RETURNING id'
+    hosp_values = (payload['date'],3,decode['user_id'], payload['nurses'][0][0],payload['patient_id'])
+
+    surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
+
+    surgery_nurses = 'INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)'
+
+    conn = db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute("BEGIN TRANSACTION")
+        cur.execute(hospitalization,hosp_values)
+        hosp_id = cur.fetchone()
+        hosp_id = hosp_id[0]
+
+        surg_values = (payload['date'],int(payload['duration']),payload['result'],hosp_id)
+        cur.execute(surgery,surg_values)
+        surg_id = cur.fetchone()
+        surg_id = surg_id[0]
+
+        for row in payload['nurses']:
+            nurses_values = (row[1],row[0],surg_id)
+            cur.execute(surgery_nurses,nurses_values)
+        conn.commit()
+
+        response = {'status': StatusCodes['success'],
+                    'results': f'"hospitalization_id": {hosp_id}, "surgery_id":{surg_id}, "patient_id": {payload['patient_id']}, "date": {payload['date']}'}
+    except (Exception,psycopg2.DatabaseError) as error:
+        logger.error(f'')
+        response = {'status': StatusCodes['internal_error'],
+                    'error': str(error)}
+    finally:
+        if conn is not None:
+            conn.close()
+    return flask.jsonify(response)
+
 def role(cc,cur):
     # check if patient
     cur.execute("SELECT use_cc FROM patient WHERE use_cc = %s",cc)
@@ -235,19 +345,27 @@ def role(cc,cur):
         return "patient"
     
     #check if doctor
-    cur.execute("SELECT use_cc FROM doctor WHERE use_cc = %s",cc)
+    cur.execute("SELECT employee_use_cc FROM doctor WHERE employee_use_cc = %s",cc)
     if cur.fetchone():
         return "doctor"
     
     #check if nurse
-    cur.execute("SELECT use_cc FROM nurse WHERE use_cc = %s", cc)
+    cur.execute("SELECT employee_use_cc FROM nurse WHERE employee_use_cc = %s", cc)
     if cur.fetchone():
         return "nurse"
     
     #check if assistant
-    cur.execute("SELECT use_cc FROM assistant WHERE use_cc = %s",cc)
+    cur.execute("SELECT employee_use_cc FROM assistant WHERE employee_use_cc = %s",cc)
     if cur.fetchone():
         return "assistant"
+    
+def time_up(token):
+    t = int(time.time())
+    if t > token:
+        response = {'status':StatusCodes['api_error'],'results': 'sessão expirada, por favor inicie sessão novamente.'}
+        return response
+    else:
+        return 0
 
 
 if __name__ == "__main__":
