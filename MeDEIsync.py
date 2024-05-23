@@ -461,6 +461,57 @@ def see_appointments(patient_id):
         response = {'status':StatusCodes['api_error'],'results': 'user not allowed to perform this action.'}
     return flask.jsonify(response)
 
+#nao sei se está bem
+#get prescriptions
+@app.route('/dbproj/prescriptions/<person_id>', methods=['GET'])
+def get_prescriptions(person_id):
+    logger.info(f'GET /dbproj/prescriptions/{person_id}')
+    logger.debug(f'person_id: {person_id}')
+
+    jwt_token = flask.request.headers.get('Authorization')
+    if not jwt_token:
+        return flask.jsonify({'status': 'error', 'message': 'Authorization header is missing'}), 401
+
+    try:
+        jwt_token = jwt_token.split('Bearer ')[1]  # Remove extra characters
+        decode = jwt.decode(jwt_token, jwt_key, algorithms=['HS256'])
+    except Exception as e:
+        logger.error(f'JWT decode error: {e}')
+        return flask.jsonify({'status': 'error', 'message': 'Invalid token'}), 401
+
+    if time_up(decode['duracao_token']) != 0:
+        response = time_up(decode['duracao_token'])
+        return flask.jsonify(response), 401
+
+    conn = db_connection()
+    cur = conn.cursor()
+
+    if decode['funcao'] == 'patient' and decode['cc'] == person_id or decode['funcao'] == 'employee':
+        try:
+            cur.execute('''
+                SELECT p.prescription_id, p.medication, p.dosage, p.start_date, p.end_date, d.name AS doctor_name 
+                FROM prescriptions AS p
+                LEFT JOIN doctors AS d ON p.doctor_id = d.doctor_id 
+                WHERE p.patient_id = %s
+            ''', (person_id,))
+            rows = cur.fetchall()
+            if rows:
+                response = {'status': 'success', 'results': rows}
+            else:
+                response = {'status': 'success', 'results': 'No prescriptions for this user'}
+                
+        except (Exception, psycopg2.DatabaseError) as error:
+            logger.error(f'GET /dbproj/prescriptions - error: {error}')
+            response = {'status': 'internal_error', 'error': str(error)}
+        finally:
+            if conn is not None:
+                conn.close()
+    else:
+        response = {'status': 'api_error', 'message': 'User not allowed to perform this action.'}
+        
+    return flask.jsonify(response)
+
+
 #schedule surgery, hospitalization not provided
 # FALTA bill update/create -> triggers
 # alter results -> its a schedule not a log
@@ -514,7 +565,7 @@ def schedule_surgery_no_hospitalization():
         conn.commit()
 
         response = {'status': StatusCodes['success'],
-                    'results': f'"hospitalization_id": {hosp_id}, "surgery_id":{surg_id}, "patient_id": {payload['patient_id']}, "date": {payload['date']}'}
+                    'results': f'"hospitalization_id": {hosp_id}, "surgery_id":{surg_id}, "patient_id": {payload["patient_id"]}, "date": {payload["date"]}'}
     except (Exception,psycopg2.DatabaseError) as error:
         logger.error(f'')
         response = {'status': StatusCodes['internal_error'],
