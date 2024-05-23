@@ -338,6 +338,25 @@ def schedule_surgery_no_hospitalization():
             conn.close()
     return flask.jsonify(response)
 
+
+#execute payment
+@app.route('/MeDEIsync_DB/bills/<bill_id>', methods =  ['POST'])
+def payment(bill_id):
+    logger.info('POST /MeDEIsync_DB/bills')
+
+    jwt_token = flask.request.headers.get('Authorization')
+    jwt_token = jwt_token.split('Bearer ')[1]   #remove extra characters
+    decode = jwt.decode(jwt_token,jwt_key,algorithms = ['HS256'])
+    
+  
+    if time_up(decode['duracao_token']) != 0:
+        response = time_up(decode['duracao_token'])
+        return flask.jsonify(response)
+    
+    if decode['funcao'] != 'patient':
+        response = {'status':StatusCodes['api_error'], "error":'Only patients can pay their own bills'}
+
+
 def role(cc,cur):
     # check if patient
     cur.execute("SELECT use_cc FROM patient WHERE use_cc = %s",cc)
@@ -367,6 +386,41 @@ def time_up(token):
     else:
         return 0
 
+
+def temporary_insert():
+    conn = db_connection()
+    cur = conn.cursor()
+
+    cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(1234,'doctor1',1234,'2003-01-11',1423))
+    cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (1234,'yolo'))
+    cur.execute("INSERT INTO doctor(employee_use_cc,medical_license,main_specialization_) VALUES(%s,%s,%s)",(1234,'uc','neuroscience'))
+
+    
+    cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(2345,'nurse1',1234,'2003-01-11',324))
+    cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (2345,'yolo'))
+    cur.execute("INSERT INTO nurse(employee_use_cc,internal_hierarchy) VALUES(%s,%s)",(2345,'chief_nurse'))
+
+
+    
+    cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(3456,'assistant1',1234,'2003-01-11',324))
+    cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (3456,'yolo'))
+    cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(3456,'chief_assistant'))
+
+    
+    cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(4567,'patient1',1234,'2003-01-11',324))
+    cur.execute("INSERT INTO patient(use_cc,medical_record) VALUES(%s,%s)",(4567,'yolo'))
+    conn.commit()
+    conn.close()
+    return 1
+
+def add_bill(user_id,bill_ammount)
+    conn = db_connection()
+    cur = conn.cursor()
+
+    cur.execute("INSERT INTO bill (nif,ammount,patient_use_cc) VALUES(%s,%s,%s)"(bill_ammount,bill_ammount,user_id))
+    conn.commit()
+    conn.close()
+    return 1
 
 if __name__ == "__main__":
     host = '127.0.0.1'
