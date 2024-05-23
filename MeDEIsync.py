@@ -42,6 +42,7 @@ logger.addHandler(ch)
 
 @app.route('/')
 def landing_page():
+    add_bill(4567,2)
     return"""
     Bem-vindo!<br/>
 """
@@ -356,6 +357,53 @@ def payment(bill_id):
     if decode['funcao'] != 'patient':
         response = {'status':StatusCodes['api_error'], "error":'Only patients can pay their own bills'}
 
+    payload = flask.request.get_json()
+
+    if 'date' not in payload or 'ammount' not in payload or 'method' not in payload:
+        response = {'status': StatusCodes['api_error'], 'error': 'payload should be: date - ammount - method.'}
+    pay_ammmount = int(payload['ammount'])
+
+    conn = db_connection()
+    cur = conn.cursor()
+    try:
+        cur.execute("BEGIN TRANSACTION")
+        cur.execute("SELECT (ammount_left,patient_use_cc) FROM bill WHERE id = %s",(bill_id))
+        query = cur.fetchone()
+        query = query[0].split('(')
+        query = query[1].split(')')
+        query = query[0].split(',')
+        if query:
+            if int(query[1]) == decode['user_id']:
+                
+                if pay_ammmount >= int(query[0]):
+                    new_ammount = pay_ammmount - int(query[0])
+
+                    values = (payload['date'],new_ammount,payload['method'],decode['user_id'],bill_id)
+                    cur.execute("UPDATE public.bill SET ammount_left = 0, status = 'paid' WHERE id = %s",(bill_id,))
+                    cur.execute("INSERT INTO payment(pay_date,paid_amount,payment_method,patient_use_cc,bill_id) VALUES (%s,%s,%s,%s,%s)", values) 
+                    response = {'status':StatusCodes['success'], 'results': 'bill paid!'}
+                else:
+                    new_ammount = int(query[0]) - pay_ammmount
+                    values = (payload['date'],new_ammount,payload['method'],decode['user_id'],bill_id)
+
+                    cur.execute("UPDATE bill SET ammount_left = %s WHERE id = %s",(new_ammount,bill_id))
+                    cur.execute("INSERT INTO payment(pay_date,paid_ammount,payment_methood,patient_use_cc,bill_id) VALUES(%s,%s,%s,%s,%s)") ###
+                    response = {'status':StatusCodes['success'], 'results': f'bill deducted, ammount left - {new_ammount}'}
+
+            else:
+                response = {'status': StatusCodes['api_error'], 'error': 'Error accessing bill'}
+        else:
+            response = {'status': StatusCodes['api_error'], 'error': 'Only the owner patient can pay his/her bill.'}
+            conn.close()
+            return flask.jsonify(response)
+    except (Exception,psycopg2.DatabaseError) as error:
+        logger.error(f'POST /MeDEIsync_DB/bills - error: {error}')
+        response = {'status':StatusCodes['internal_error'], 'errors': str(error)}
+        conn.rollback()
+    finally:
+        if conn is not None:
+            conn.close()
+    return flask.jsonify(response)
 
 def role(cc,cur):
     # check if patient
@@ -393,7 +441,7 @@ def temporary_insert():
 
     cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(1234,'doctor1',1234,'2003-01-11',1423))
     cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (1234,'yolo'))
-    cur.execute("INSERT INTO doctor(employee_use_cc,medical_license,main_specialization_) VALUES(%s,%s,%s)",(1234,'uc','neuroscience'))
+    cur.execute("INSERT INTO doctor(employee_use_cc,medical_license,main_specialization) VALUES(%s,%s,%s)",(1234,'uc','neuroscience'))
 
     
     cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(2345,'nurse1',1234,'2003-01-11',324))
@@ -404,7 +452,7 @@ def temporary_insert():
     
     cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(3456,'assistant1',1234,'2003-01-11',324))
     cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (3456,'yolo'))
-    cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(3456,'chief_assistant'))
+    cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(3456,2))
 
     
     cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(4567,'patient1',1234,'2003-01-11',324))
@@ -413,11 +461,11 @@ def temporary_insert():
     conn.close()
     return 1
 
-def add_bill(user_id,bill_ammount)
+def add_bill(user_id,bill_ammount):
     conn = db_connection()
     cur = conn.cursor()
 
-    cur.execute("INSERT INTO bill (nif,ammount,patient_use_cc) VALUES(%s,%s,%s)"(bill_ammount,bill_ammount,user_id))
+    cur.execute("INSERT INTO bill (nif,ammount_inic,patient_use_cc,status,ammount_left) VALUES(%s,%s,%s,%s,%s)",(bill_ammount,bill_ammount,user_id,'to_pay',bill_ammount))
     conn.commit()
     conn.close()
     return 1

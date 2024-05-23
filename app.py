@@ -208,7 +208,7 @@ def user_auth():
     conn = db_connection()
     cur = conn.cursor()
 
-    logger.debug(f'PUT /spotivinho_DB/user/auth - payload: {payload}')s
+    logger.debug(f'PUT /spotivinho_DB/user/auth - payload: {payload}')
 
     if 'username' not in payload or 'password' not in payload:
         response = {'status': StatusCodes['api_error'],
