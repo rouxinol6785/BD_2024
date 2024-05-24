@@ -1088,25 +1088,33 @@ def temporary_insert():
             j=j+1  
 
 
+
+        #insere side effects
+        side_effects    =["side_effect1"    ,"side_effect1" ,"side_effect1" ,"side_effect1" ,"side_effect1"]
+        for i in range(5):
+            cur.execute("INSERT INTO side_effect (description) VALUES (%s)",(side_effects[i]))
+
+        
+        #insere medicamentos
+        medication  =["medication1","medication2","medication3","medication4","medication5"]
+        for i in range(5):
+            cur.execute("INSERT INTO medication (name) VALUES (%s)",(medication[i]))
+
+        for i in range(5):
+            cur.execute("INSERT INTO medication_side_effect (severity, probability, side_effect_id, medication_id) VALUES (%s,%s,%s,%s)",(i,"0.8", 5-i, i))
+
+
+
         #insere appointments
         appointment_date=["2024-05-24","2024-04-30","2024-05-21","2024-03-21","2024-06-15"]
         for i in range(5):
             cur.execute("INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc) VALUES (%s,%s,%s)", (appointment_date[i], pacientes_id[i], medicos_id[i]))
 
-        '''
-        schedule_surgery_no_hospitalization
-        
-        hospitalization = 'INSERT INTO hospitalization (data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s) RETURNING id'
-        hosp_values = (payload['date'],decode['user_id'], int(payload['nurses'][0][0]),int(payload['patient_id']))
-
-        surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
-        surgery_nurses = 'INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)'
-        '''
-
-
+       
+        #inserir hospitalizações e cirurgias
         #MUDAR TIPO DO ATRIBUTO DURATION
-        surgery_date            =["2024-03-4","2024-02-10","2024-06-12","2024-07-17","2024-06-20"]
-        hospitalization_date    =["2024-03-3","2024-02-9","2024-06-11","2024-07-16","2024-06-19"]
+        surgery_date            =["2024-03-4"   ,"2024-02-10"   ,"2024-06-12"   ,"2024-07-17"   ,"2024-06-20"]
+        hospitalization_date    =["2024-03-3"   ,"2024-02-9"    ,"2024-06-11"   ,"2024-07-16"   ,"2024-06-19"]
 
         for i in range(5):
             cur.execute("INSERT INTO hospitalization (data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s) RETURNING id", (hospitalization_date[i], assistentes_id[i], enfermeiros_id[i], pacientes_id[i]))
