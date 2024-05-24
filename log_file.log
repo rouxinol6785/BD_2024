@@ -133,3 +133,217 @@ INFO:werkzeug:127.0.0.1 - - [21/May/2024 17:49:53] "POST /MeDEIsync_DB/user/regi
 INFO:logger:POST /MeDEIsync_DB/user/registration/patient
 DEBUG:logger:POST /MeDEIsync_DB/user/registration/patient - payload: {payload}
 INFO:werkzeug:127.0.0.1 - - [21/May/2024 18:10:33] "POST /MeDEIsync_DB/user/registration/patient HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/surgery
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:46:03] "POST /MeDEIsync_DB/surgery HTTP/1.1" 200 -
+INFO:logger:PUT http://localhost:8080/MeDEIsync_DB/user
+DEBUG:logger:PUT http://localhost:8080/MeDEIsync_DB/user - payload - {'username': 'assistant1', 'password': '1234'}
+DEBUG:logger:jwt_payload - {'funcao': 'assistant', 'user_id': 3456, 'duracao_token': 1716558972}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:46:12] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/surgery
+DEBUG:logger:POST /MeDEIsync_DB/surgery - payload:{'patient_id': '4567', 'doctor': '1234', 'nurses': [['2345', 'responsible'], ['5678', 'just learning']], 'date': '2024-06-02', 'duration': '2', 'result': 'open head'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:46:34] "POST /MeDEIsync_DB/surgery HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:48:02] "[35m[1mPOST /MeDEIsync_DB/surgery/{7} HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:48:09] "[35m[1mPOST /MeDEIsync_DB/surgery/{7} HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:48:29] "[35m[1mPOST /MeDEIsync_DB/surgery/7 HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/surgery
+DEBUG:logger:POST /MeDEIsync_DB/surgery - payload:{'patient_id': '4567', 'doctor': '1234', 'nurses': [['2345', 'responsible'], ['5678', 'just learning']], 'date': '2024-06-02', 'duration': '2', 'result': 'open head'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:50:19] "POST /MeDEIsync_DB/surgery/7 HTTP/1.1" 200 -
+INFO:logger:GET MeDEIsync_DB/appointments/<patient_user_id>
+DEBUG:logger:patient_cc: 4567
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:51:09] "GET /MeDEIsync_DB/appointments/4567 HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/register/assistant
+DEBUG:logger:POST /MeDEIsync_DB/registration/assistant - payload: {'nome': 'assis', 'email': 'ass@gmail.com', 'password': '1234', 'data_nascimento': '2003-01-11', 'cc': ' 34567', 'n_utente': '76543', 'nib': '234567', 'contract': 'my soul for a ferrari', 'field_0': '0'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:51:26] "POST /MeDEIsync_DB/register/assistant HTTP/1.1" 200 -
+INFO:logger:PUT http://localhost:8080/MeDEIsync_DB/user
+DEBUG:logger:PUT http://localhost:8080/MeDEIsync_DB/user - payload - {'username': 'assistant1', 'password': '1234'}
+DEBUG:logger:jwt_payload - {'funcao': 'assistant', 'user_id': 3456, 'duracao_token': 1716559290}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:51:30] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
+INFO:logger:GET MeDEIsync_DB/appointments/<patient_user_id>
+DEBUG:logger:patient_cc: 4567
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:51:47] "GET /MeDEIsync_DB/appointments/4567 HTTP/1.1" 200 -
+INFO:logger:PUT http://localhost:8080/MeDEIsync_DB/user
+DEBUG:logger:PUT http://localhost:8080/MeDEIsync_DB/user - payload - {'username': 'jesus', 'password': 'pass_do?jesus'}
+DEBUG:logger:jwt_payload - {'funcao': 'patient', 'user_id': 4567, 'duracao_token': 1716559347}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:52:27] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/appointment
+DEBUG:logger:POST /MeDEIsync_DB/appointment - payload: {'doctor_cc': '1234', 'date': '2024-06-02', 'type': 'ver as unhas'}
+ERROR:logger:POST /MeDEIsync_DB/appointment - error: null value in column "bill_id" of relation "appointment" violates not-null constraint
+DETAIL:  Failing row contains (1, 2024-06-02, 4567, 1234, null).
+
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:52:40] "POST /MeDEIsync_DB/appointment HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/appointment
+DEBUG:logger:POST /MeDEIsync_DB/appointment - payload: {'doctor_cc': '1234', 'date': '2024-06-02', 'type': 'ver as unhas'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:54:07] "POST /MeDEIsync_DB/appointment HTTP/1.1" 200 -
+INFO:logger:GET MeDEIsync_DB/appointments/<patient_user_id>
+DEBUG:logger:patient_cc: 4567
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:54:12] "GET /MeDEIsync_DB/appointments/4567 HTTP/1.1" 200 -
+INFO:logger:PUT http://localhost:8080/MeDEIsync_DB/user
+DEBUG:logger:PUT http://localhost:8080/MeDEIsync_DB/user - payload - {'username': 'jesus', 'password': 'pass_do?jesus'}
+DEBUG:logger:jwt_payload - {'funcao': 'patient', 'user_id': 4567, 'duracao_token': 1716559574}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:56:14] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/prescription
+DEBUG:logger:POST /MeDEIsync_DB/prescription - error: {'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+ERROR:logger:POST /MeDEIsync_DB/prescription - error:{'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:56:34] "POST /MeDEIsync_DB/prescription HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/prescription
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:58:46] "POST /MeDEIsync_DB/prescription HTTP/1.1" 200 -
+INFO:logger:PUT http://localhost:8080/MeDEIsync_DB/user
+DEBUG:logger:PUT http://localhost:8080/MeDEIsync_DB/user - payload - {'username': 'doctor1', 'password': '1234'}
+DEBUG:logger:jwt_payload - {'funcao': 'doctor', 'user_id': 1234, 'duracao_token': 1716559732}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:58:52] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/prescription
+DEBUG:logger:POST /MeDEIsync_DB/prescription - error: {'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:59:04] "POST /MeDEIsync_DB/prescription HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/prescription
+DEBUG:logger:POST /MeDEIsync_DB/prescription - error: {'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+ERROR:logger:POST /MeDEIsync_DB/prescription - error:{'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 14:59:56] "POST /MeDEIsync_DB/prescription HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/prescription
+DEBUG:logger:POST /MeDEIsync_DB/prescription - error: {'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+ERROR:logger:POST /MeDEIsync_DB/prescription - error:{'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:01:18] "POST /MeDEIsync_DB/prescription HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/prescription
+DEBUG:logger:POST /MeDEIsync_DB/prescription - error: {'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+ERROR:logger:POST /MeDEIsync_DB/prescription - error:{'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:04:06] "POST /MeDEIsync_DB/prescription HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/prescription
+DEBUG:logger:POST /MeDEIsync_DB/prescription - error: {'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+ERROR:logger:POST /MeDEIsync_DB/prescription - error:{'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:04:50] "POST /MeDEIsync_DB/prescription HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/prescription
+DEBUG:logger:POST /MeDEIsync_DB/prescription - error: {'type': 'hospitalization', 'event_id': '1', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:05:35] "POST /MeDEIsync_DB/prescription HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/prescription
+DEBUG:logger:POST /MeDEIsync_DB/prescription - error: {'type': 'hospitalization', 'event_id': '7', 'validity': '2024-05-23', 'medicines': [{'medicine': 'ben-u-ron', 'dosage': '1g', 'frequency': 'every 8 hours'}, {'medicine': 'brufen', 'dosage': '0,5g', 'frequency': '4 hours after ben-u-ron'}], 'patient_id': '4567'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:05:54] "POST /MeDEIsync_DB/prescription HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/bills
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:07:00] "POST /MeDEIsync_DB/bills/2 HTTP/1.1" 200 -
+INFO:logger:PUT http://localhost:8080/MeDEIsync_DB/user
+DEBUG:logger:PUT http://localhost:8080/MeDEIsync_DB/user - payload - {'username': 'jesus', 'password': 'pass_do?jesus'}
+DEBUG:logger:jwt_payload - {'funcao': 'patient', 'user_id': 4567, 'duracao_token': 1716560225}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:07:05] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/bills
+ERROR:logger:POST /MeDEIsync_DB/bills - error: column "ammount_left" does not exist
+LINE 1: SELECT (ammount_left,patient_use_cc) FROM bill WHERE id = '2...
+                ^
+
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:07:15] "POST /MeDEIsync_DB/bills/2 HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/bills
+ERROR:logger:POST /MeDEIsync_DB/bills - error: syntax error at or near "%"
+LINE 1: ...nt,payment_methood,patient_use_cc,bill_id) VALUES(%s,%s,%s,%...
+                                                             ^
+
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:08:42] "POST /MeDEIsync_DB/bills/2 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/bills
+ERROR:logger:POST /MeDEIsync_DB/bills - error: column "paid_ammount" of relation "payment" does not exist
+LINE 1: INSERT INTO payment(pay_date,paid_ammount,payment_methood,pa...
+                                     ^
+
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:10:22] "POST /MeDEIsync_DB/bills/2 HTTP/1.1" 200 -
+INFO:logger:POST /MeDEIsync_DB/bills
+ERROR:logger:POST /MeDEIsync_DB/bills - error: column "payment_methood" of relation "payment" does not exist
+LINE 1: INSERT INTO payment(pay_date,paid_ammount,payment_methood,pa...
+                                                  ^
+
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:11:10] "POST /MeDEIsync_DB/bills/2 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:POST /MeDEIsync_DB/bills
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 15:11:28] "POST /MeDEIsync_DB/bills/2 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
