@@ -1,0 +1,56 @@
+#### appointment trigger
+
+CREATE TRIGGER appointment_bill BEFORE INSERT on appointment
+FOR EACH ROW EXECUTE PROCEDURE appBill();
+
+create or replace function appBill() returns trigger
+LANGUAGE plpgsql as $$
+DECLARE
+    new_bill_id INTEGER;
+BEGIN
+ insert into bill(ammount,status,patient_use_cc) 
+ VALUES (10,'to_pay',NEW.patient_use_cc)
+returning id into new_bill_id;
+NEW.bill_id := new_bill_id;
+
+return new;
+END;
+$$;
+
+### surgery trigger
+
+CREATE TRIGGER surgBill BEFORE INSERT ON surgery
+FOR EACH ROW EXECUTE PROCEDURE surgery_bill()
+
+
+CREATE OR REPLACE FUNCTION surgery_bill() RETURNS TRIGGER
+LANGUAGE plpgsql as $$
+DECLARE
+	ex_bill_id INTEGER;
+	patient_id INTEGER;
+	new_bill_id INTEGER;
+BEGIN
+ SELECT bill_id INTO ex_bill_id
+ FROM hospitalization_bill
+ WHERE hospitalization_id = NEW.hospitalization_id;
+
+ IF FOUND THEN
+  UPDATE bill
+  SET ammount = ammount +10
+  WHERE id = ex_bill_id;
+ 
+ ELSE
+  SELECT hospitalization.patient_use_cc INTO patient_id
+  FROM hospitalization
+  WHERE id = NEW.hospitalization_id;
+  INSERT INTO bill (ammount,status,patient_use_cc)
+  VALUES(10,'to_pay',patient_id)
+  RETURNING id INTO new_bill_id;
+  INSERT INTO hospitalization_bill (hospitalization_id,bill_id)
+  VALUES (NEW.hospitalization_id,new_bill_id);
+ END IF;
+RETURN NEW;
+END;
+$$
+  
+  
