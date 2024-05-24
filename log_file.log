@@ -822,3 +822,8 @@ INFO:werkzeug: * Debugger PIN: 414-218-023
 INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
 DEBUG:logger:person_id: 2024-05-24
 INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:33:34] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-02-10
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:34:25] "GET /MeDEIsync_DB/daily/2024-02-10 HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080

@@ -156,7 +156,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"assistant1\",\r\n    \"password\": \"1234\"\r\n }",
+					"raw": "{\r\n    \"username\": \"assistente1\",\r\n    \"password\": \"password1\"\r\n }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -549,7 +549,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjU2MDIyNX0.WnyBb9nkmp43NfuUY1nqD9k_8c3bsuTDx6fjjj8qLfw",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjo0MDAwMDAwMSwiZHVyYWNhb190b2tlbiI6MTcxNjU3NTQ3M30.M6ixLLYEx1xyiOk7wYFmBq880KUEkqikEFkurRxGzpE",
 							"type": "string"
 						}
 					]
@@ -579,7 +579,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjU2MDIyNX0.WnyBb9nkmp43NfuUY1nqD9k_8c3bsuTDx6fjjj8qLfw",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjo0MDAwMDAwMSwiZHVyYWNhb190b2tlbiI6MTcxNjU3NjExNH0.k3CXPEVE1iZXL5td6oq_RPQuCWUgyX1ovNd-1Aty8Vs",
 							"type": "string"
 						}
 					]
@@ -587,7 +587,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/MeDEIsync_DB/daily/2024-05-24",
+					"raw": "http://localhost:8080/MeDEIsync_DB/daily/2024-02-10",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -596,7 +596,7 @@
 					"path": [
 						"MeDEIsync_DB",
 						"daily",
-						"2024-05-24"
+						"2024-02-10"
 					]
 				}
 			},
@@ -610,7 +610,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjozNDU2LCJkdXJhY2FvX3Rva2VuIjoxNzE2NTAyMjY1fQ.bZ6K4NM4YEOwaJcYcP9bRFcLsDRrwt8OaLDbGyR06DM",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjo0MDAwMDAwMSwiZHVyYWNhb190b2tlbiI6MTcxNjU3NTQ3M30.M6ixLLYEx1xyiOk7wYFmBq880KUEkqikEFkurRxGzpE",
 							"type": "string"
 						}
 					]
