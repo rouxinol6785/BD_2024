@@ -1118,7 +1118,7 @@ def temporary_insert():
         #insere appointments
         appointment_date=["2024-05-24","2024-04-30","2024-05-21","2024-03-21","2024-06-15"]
         for i in range(5):
-            cur.execute("INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc) VALUES (%s,%s,%s)", (appointment_date[i], pacientes_id[i], medicos_id[i]))
+            cur.execute("INSERT INTO appointment (ap_date) VALUES (%s)", (appointment_date[i],))
         j=j+1
        
         #inserir hospitalizações e cirurgias
