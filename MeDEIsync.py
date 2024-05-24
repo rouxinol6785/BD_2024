@@ -1091,27 +1091,37 @@ def temporary_insert():
 
 
 
+
         #insere side effects
         side_effects    =["side_effect1"    ,"side_effect1" ,"side_effect1" ,"side_effect1" ,"side_effect1"]
         for i in range(5):
-            cur.execute("INSERT INTO side_effect (description) VALUES (%s)",(side_effects[i]))
+            cur.execute("INSERT INTO side_effect (id, description) VALUES (%s,%s)",(i, side_effects[i]))
         j=j+1
 
         #insere medicamentos
         medication  =["medication1","medication2","medication3","medication4","medication5"]
         for i in range(5):
-            cur.execute("INSERT INTO medication (name) VALUES (%s)",(medication[i]))
+            cur.execute("INSERT INTO medication (id, name) VALUES (%s,%s)",(i, medication[i]))
 
         j=j+1
         for i in range(5):
-            cur.execute("INSERT INTO medication_side_effect (severity, probability, side_effect_id, medication_id) VALUES (%s,%s,%s,%s)",(i,"0.8", 5-i, i))
+            cur.execute("INSERT INTO medication_side_effect (severity, probability, side_effect_id, medication_id) VALUES (%s,%s,%s,%s)",(i,"0.8", 4-i, i))
+        j=j+1
+
+
+        #insere bills
+        bill_amount=[20,100,200,500,1000]
+        bill_status=["Pago","Pago","Pago","Por Pagar","Por Pagar"]
+
+        for i in range(5):
+            cur.execute("INSERT INTO bill (id,ammount,status, patient_use_cc) VALUES (%s,%s,%s,%s)", (i, bill_amount[i], bill_status[i], pacientes_id[i]))
         j=j+1
 
 
         #insere appointments
         appointment_date=["2024-05-24","2024-04-30","2024-05-21","2024-03-21","2024-06-15"]
         for i in range(5):
-            cur.execute("INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc) VALUES (%s,%s,%s)", (appointment_date[i], pacientes_id[i], medicos_id[i]))
+            cur.execute("INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc, bill_id) VALUES (%s,%s,%s,%s)", (appointment_date[i], pacientes_id[i], medicos_id[i],i))
         j=j+1
        
         #inserir hospitalizações e cirurgias
