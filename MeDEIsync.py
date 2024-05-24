@@ -1,10 +1,9 @@
+import flask
 import logging
-import random
-import time
 import psycopg2
 import jwt
-import flask
-
+import random
+import time
 
 
 app = flask.Flask(__name__)
@@ -369,7 +368,7 @@ def schedule_appointment():
     logger.debug(f'POST /MeDEIsync_DB/appointment - payload: {payload}')
 
     #appointment_nurse opcional
-    if 'doctor_cc' not in payload or 'date' not in payload or 'type' not in payload:
+    if 'doctor_cc' not in payload or 'date' not in payload or 'type' not in payload or 'price' not in payload:
         response = {'status': StatusCodes['api_error'], 'results': 'payload should be have: doctor_cc - date - type - price'}
         return flask.jsonify(response)
     
@@ -388,8 +387,8 @@ def schedule_appointment():
         return flask.jsonify(response)
     
    
-    statement = 'INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc) VALUES (%s,%s,%s)'
-    values = (payload['date'],int(decode['user_id']),int(payload['doctor_cc']))
+    statement = 'INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc,bill_id) VALUES (%s,%s,%s,%s)'
+    values = (payload['date'],int(decode['user_id']),int(payload['doctor_cc']),1)
     conn = db_connection()
     cur = conn.cursor()
     try:
@@ -652,8 +651,8 @@ def schedule_surgery_no_hospitalization():
         response = {'status': StatusCodes['api_error'], 'results': 'payload should be: patient_id - doctor - nurses - date.'}
         return flask.jsonify(response)
 
-    hospitalization = 'INSERT INTO hospitalization (data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s) RETURNING id'
-    hosp_values = (payload['date'],decode['user_id'], int(payload['nurses'][0][0]),int(payload['patient_id']))
+    hospitalization = 'INSERT INTO hospitalization (data_inic, bill_id, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s,%s) RETURNING id'
+    hosp_values = (payload['date'],3,decode['user_id'], payload['nurses'][0][0],payload['patient_id'])
 
     surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
 
@@ -666,6 +665,7 @@ def schedule_surgery_no_hospitalization():
         cur.execute(hospitalization,hosp_values)
         hosp_id = cur.fetchone()
         hosp_id = hosp_id[0]
+
         surg_values = (payload['date'],int(payload['duration']),payload['result'],hosp_id)
         cur.execute(surgery,surg_values)
         surg_id = cur.fetchone()
@@ -719,6 +719,7 @@ def schedule_surgery(h_id):
     cur = conn.cursor()
     try:
         cur.execute("BEGIN TRANSACTION")
+        print(h_id)
         cur.execute('SELECT id FROM hospitalization WHERE id = %s',h_id)
         i = cur.fetchone()
         if i:
@@ -1010,45 +1011,54 @@ def temporary_insert():
     cur = conn.cursor()
     try:
         #info pacientes
-        pacientes_nome          =["paciente1"               ,"paciente2"                ,"paciente3"                ,"paciente4"                ,"paciente5"]
-        pacientes_id            =[10000001                  ,10000002                   ,10000003                   ,10000004                   ,10000005]
-        pacientes_email         =["paciente1@gmail.com"     ,"paciente2@gmail.com"      ,"paciente3@gmail.com"      ,"paciente4@gmail.com"      ,"paciente5@gmail.com"]
-        pacientes_password      =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"]
-        pacientes_data          =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"]
-        pacientes_n_utente      =[11111111                  ,11111112                   ,11111113                   ,11111114                   ,11111115]
-        pacientes_nib           =["PT5010000000001"         ,"PT5010000000002"          ,"PT5010000000003"          ,"PT5010000000004"          ,"PT5010000000005"]
-        pacientes_medical_rec   =["medical_rec1"            ,"medical_rec1"             ,"medical_rec1"             ,"medical_rec1"             ,"medical_rec1"]
+        pacientes_nome          =["paciente1"               ,"paciente2"                ,"paciente3"                ,"paciente4"                ,"paciente5"                ]
+        pacientes_id            =[10000001                  ,10000002                   ,10000003                   ,10000004                   ,10000005                   ]
+        pacientes_email         =["paciente1@gmail.com"     ,"paciente2@gmail.com"      ,"paciente3@gmail.com"      ,"paciente4@gmail.com"      ,"paciente5@gmail.com"      ]
+        pacientes_password      =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
+        pacientes_data          =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]
+        pacientes_n_utente      =[11111111                  ,11111112                   ,11111113                   ,11111114                   ,11111115                   ]
+        pacientes_nib           =["PT5010000000001"         ,"PT5010000000002"          ,"PT5010000000003"          ,"PT5010000000004"          ,"PT5010000000005"          ]
+        pacientes_medical_rec   =["medical_rec1"            ,"medical_rec1"             ,"medical_rec1"             ,"medical_rec1"             ,"medical_rec1"             ]
+
 
         #info medicos
-        medicos_nome            =["medico1"                 ,"medico2"                  ,"medico3"                  ,"medico4"                  ,"medico5"]
-        medicos_id              =[20000001                  ,20000002                   ,20000003                   ,20000004                   ,20000005]
-        medicos_email           =["medico1@gmail.com"       ,"medico2@gmail.com"        ,"medico3@gmail.com"        ,"medico4@gmail.com"        ,"medico5@gmail.com"]
-        medicos_password        =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"]
-        medicos_data            =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"]
-        medicos_n_utente        =[22222221                  ,22222222                   ,22222223                   ,22222224                   ,22222225]
-        medicos_nib             =["PT5020000000001"         ,"PT5020000000002"          ,"PT5020000000003"          ,"PT5020000000004"          ,"PT5020000000005"]
-        medicos_license         =["universidade de coimbra" ,"universidade de lisboa"   ,"universidade do porto"    ,"universidade do minho"    ,"universidade do algarve"]
-        medicos_specialization  =["genecologia"             ,"ortopedia"                ,"cardiologia"              ,"neurologia"               ,"cirurgia"]
+        medicos_nome            =["medico1"                 ,"medico2"                  ,"medico3"                  ,"medico4"                  ,"medico5"                  ]
+        medicos_id              =[20000001                  ,20000002                   ,20000003                   ,20000004                   ,20000005                   ]
+        medicos_email           =["medico1@gmail.com"       ,"medico2@gmail.com"        ,"medico3@gmail.com"        ,"medico4@gmail.com"        ,"medico5@gmail.com"        ]
+        medicos_password        =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
+        medicos_data            =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]
+        medicos_n_utente        =[22222221                  ,22222222                   ,22222223                   ,22222224                   ,22222225                   ]
+        medicos_nib             =["PT5020000000001"         ,"PT5020000000002"          ,"PT5020000000003"          ,"PT5020000000004"          ,"PT5020000000005"          ]
+        medicos_license         =["universidade de coimbra" ,"universidade de lisboa"   ,"universidade do porto"    ,"universidade do minho"    ,"universidade do algarve"  ]
+        medicos_specialization  =["genecologia"             ,"ortopedia"                ,"cardiologia"              ,"neurologia"               ,"cirurgia"                 ]
+        
 
         #info enfermeiros
-        enfermeiros_nome        =["enfermeiro1"             ,"enfermeiro2"              ,"enfermeiro3"              ,"enfermeiro4"              ,"enfermeiro5"]
-        enfermeiros_id          =[30000001                  ,30000002                   ,30000003                   ,30000004                   ,30000005]
-        enfermeiros_email       =["enfermeiro1@gmail.com"   ,"enfermeiro2@gmail.com"    ,"enfermeiro3@gmail.com"    ,"enfermeiro4@gmail.com"    ,"enfermeiro5@gmail.com"]
-        enfermeiros_password    =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"]
-        enfermeiros_data        =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"]
-        enfermeiros_n_utente    =[33333331                  ,33333332                   ,33333333                   ,33333334                   ,33333335]
-        enfermeiros_nib         =["PT5030000000001"         ,"PT5030000000002"          ,"PT5030000000003"          ,"PT5030000000004"          ,"PT5030000000005"]
-        enfermeiros_hierarquia  =["chefe"                   ,"auxiliar"                 ,"assistente"               ,"supervisor"               ,"chefe de unidade"]
+        enfermeiros_nome        =["enfermeiro1"             ,"enfermeiro2"              ,"enfermeiro3"              ,"enfermeiro4"              ,"enfermeiro5"              ]
+        enfermeiros_id          =[30000001                  ,30000002                   ,30000003                   ,30000004                   ,30000005                   ]
+        enfermeiros_email       =["enfermeiro1@gmail.com"   ,"enfermeiro2@gmail.com"    ,"enfermeiro3@gmail.com"    ,"enfermeiro4@gmail.com"    ,"enfermeiro5@gmail.com"    ]
+        enfermeiros_password    =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
+        enfermeiros_data        =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]      
+        enfermeiros_n_utente    =[33333331                  ,33333332                   ,33333333                   ,33333334                   ,33333335                   ]
+        enfermeiros_nib         =["PT5030000000001"         ,"PT5030000000002"          ,"PT5030000000003"          ,"PT5030000000004"          ,"PT5030000000005"          ]
+        enfermeiros_hierarquia  =["chefe"                   ,"auxiliar"                 ,"assistente"               ,"supervisor"               ,"chefe de unidade"         ]
+
 
         #info assistentes
-        assistentes_nome        =["assistente1"             ,"assistente2"              ,"assistente3"              ,"assistente4"              ,"assistente5"]
-        assistentes_id          =[40000001                  ,40000002                   ,40000003                   ,40000004                   ,40000005]
-        assistentes_email       =["assistente1@gmail.com"   ,"assistente2@gmail.com"    ,"assistente3@gmail.com"    ,"assistente4@gmail.com"    ,"assistente5@gmail.com"]
-        assistentes_password    =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"]
-        assistentes_data        =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"]
-        assistentes_n_utente    =[44444441                  ,44444442                   ,44444443                   ,44444444                   ,44444445]
-        assistentes_nib         =["PT5040000000001"         ,"PT5040000000002"          ,"PT5040000000003"          ,"PT5040000000004"          ,"PT5040000000005"]
-        assistente_field_0      =["coise1"                  ,"coise2"                   ,"coise3"                   ,"coise4"                   ,"coise5"] 
+        assistentes_nome        =["assistente1"             ,"assistente2"              ,"assistente3"              ,"assistente4"              ,"assistente5"              ]
+        assistentes_id          =[40000001                  ,40000002                   ,40000003                   ,40000004                   ,40000005                   ]
+        assistentes_email       =["assistente1@gmail.com"   ,"assistente2@gmail.com"    ,"assistente3@gmail.com"    ,"assistente4@gmail.com"    ,"assistente5@gmail.com"    ]
+        assistentes_password    =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
+        assistentes_data        =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]
+        assistentes_n_utente    =[44444441                  ,44444442                   ,44444443                   ,44444444                   ,44444445                   ]
+        assistentes_nib         =["PT5040000000001"         ,"PT5040000000002"          ,"PT5040000000003"          ,"PT5040000000004"          ,"PT5040000000005"          ]
+        assistente_field_0      =["coise1"                  ,"coise2"                   ,"coise3"                   ,"coise4"                   ,"coise5"                   ] 
+
+        #tempos dos contratos (melhor meter data de fim)
+        contratos               =["2 anos"                  ,"3 anos"                   ,"1 ano"                    ,"5 anos"                   ,"3 anos"                   ]
+
+
+        
         
 
         cur.execute("BEGIN TRANSACTION")
