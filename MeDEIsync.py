@@ -1051,63 +1051,49 @@ def temporary_insert():
         assistentes_data        =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]
         assistentes_n_utente    =[44444441                  ,44444442                   ,44444443                   ,44444444                   ,44444445                   ]
         assistentes_nib         =["PT5040000000001"         ,"PT5040000000002"          ,"PT5040000000003"          ,"PT5040000000004"          ,"PT5040000000005"          ]
-        assistente_field_0      =["coise1"                  ,"coise2"                   ,"coise3"                   ,"coise4"                   ,"coise5"                   ] 
+        assistente_field_0      =[1                         ,2                          ,3                          ,4                          ,5] 
 
         #tempos dos contratos (melhor meter data de fim)
         contratos               =["2 anos"                  ,"3 anos"                   ,"1 ano"                    ,"5 anos"                   ,"3 anos"                   ]
 
-
+        j = 1
         cur.execute("BEGIN TRANSACTION")
 
         #insere pacientes
         for i in range(5):
             cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES (%s,%s,%s,%s,%s,%s,%s)",(pacientes_nome[i], pacientes_email[i], pacientes_password[i], pacientes_data[i], pacientes_id[i], pacientes_n_utente[i], pacientes_nib[i]))
             cur.execute("INSERT INTO patient(medical_record,use_cc) VALUES(%s,%s)",(pacientes_medical_rec[i], pacientes_id[i]))
+            j=j+1
 
         #insere medicos
         for i in range(5):
             cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES (%s,%s,%s,%s,%s,%s,%s)",(medicos_nome[i], medicos_email[i], medicos_password[i], medicos_data[i], medicos_id[i], medicos_n_utente[i], medicos_nib[i]))
             cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (medicos_id[i], contratos[i]))
             cur.execute("INSERT INTO doctor(employee_use_cc,medical_license,main_specialization) VALUES(%s,%s,%s)",(medicos_id[i], medicos_license[i], medicos_specialization[i]))
+            j=j+1
 
         #insere enfermeiros
         for i in range(5):
             cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES (%s,%s,%s,%s,%s,%s,%s)",(enfermeiros_nome[i], enfermeiros_email[i], enfermeiros_password[i], enfermeiros_data[i], enfermeiros_id[i], enfermeiros_n_utente[i], enfermeiros_nib[i]))
             cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (enfermeiros_id[i], contratos[i]))
-            cur.execute("INSERT INTO nurse(employee_use_cc,internal_hierarchy) VALUES(%s,%s,%s)",(enfermeiros_id[i], enfermeiros_hierarquia[i]))
+            cur.execute("INSERT INTO nurse(employee_use_cc,internal_hierarchy) VALUES(%s,%s)",(enfermeiros_id[i], enfermeiros_hierarquia[i]))
+            j=j+1
 
         #insere assistentes
         for i in range(5):
             cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES (%s,%s,%s,%s,%s,%s,%s)",(assistentes_nome[i], assistentes_email[i], assistentes_password[i], assistentes_data[i], assistentes_id[i], assistentes_n_utente[i], assistentes_nib[i]))
             cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (assistentes_id[i], contratos[i]))
-            cur.execute("INSERT INTO assistent(employee_use_cc,field_0) VALUES(%s,%s)",(assistentes_id[i], assistente_field_0[i]))
-            
+            cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(assistentes_id[i], assistente_field_0[i]))
+            j=j+1  
 
         
-        cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(666,'alexandre','password','1999-01-4',"11243876"))
-        cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (666,'yolo'))
-        cur.execute("INSERT INTO doctor(employee_use_cc,medical_license,main_specialization) VALUES(%s,%s,%s)",(666,'uc','neuroscience'))
-
         
-        cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)",('fatima', 'fatima@gmail.com','pass_da?fatima','2000-04-11',2345,412354235,"PT0987125769"))
-        cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (2345,'yolo'))
-        cur.execute("INSERT INTO nurse(employee_use_cc,internal_hierarchy) VALUES(%s,%s)",(2345,'chief_nurse'))
-
-
-        
-        cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(3456,'assistant1',1234,'2003-01-11',324))
-        cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (3456,'yolo'))
-        cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(3456,2))
-
-        
-        cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)",('jesus', 'jesus@gmail.com','pass_do?jesus','1950-10-20',4567,9864218,"PT09832176812345"))
-        cur.execute("INSERT INTO patient(use_cc,medical_record) VALUES(%s,%s)",(4567,'yolo'))
         conn.commit()
         conn.close()
         response = {'status': StatusCodes['internal_error'], 'success':'yey!'}
 
     except(Exception,psycopg2.DatabaseError)as error:
-        logger.debug(f'start - error{error}')
+        logger.debug(f'start - error: {error}:{j}')
         response = {'status':StatusCodes['internal_error'],'errors': str(error)}
         conn.rollback()
     finally:
