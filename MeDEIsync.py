@@ -1086,7 +1086,53 @@ def temporary_insert():
             cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(assistentes_id[i], assistente_field_0[i]))
             j=j+1  
 
+
+        '''
+        schedule_appointment
+        statement = 'INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc) VALUES (%s,%s,%s)'
+        values = (payload['date'],int(decode['user_id']),int(payload['doctor_cc']))
+        '''
+
+        '''
+        schedule_surgery_no_hospitalization
         
+        hospitalization = 'INSERT INTO hospitalization (data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s) RETURNING id'
+        hosp_values = (payload['date'],decode['user_id'], int(payload['nurses'][0][0]),int(payload['patient_id']))
+
+        surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
+        surgery_nurses = 'INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)'
+        '''
+
+        '''
+        schedule_surgery
+        surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
+
+        surgery_nurses = 'INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)'
+        '''
+
+        '''
+        bill
+        cur.execute("UPDATE bill SET ammount_left = %s WHERE id = %s",(new_ammount,bill_id))
+        cur.execute("INSERT INTO payment(pay_date,paid_ammount,payment_methood,patient_use_cc,bill_id) VALUES(%s,%s,%s,%s,%s)")
+
+        '''
+
+        '''
+        add_prescription
+
+        cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(decode['user_id'],payload['patient_id'],payload['validity']))
+        
+
+        cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(row['dosage'],med_id[0],row['frequency'],presc_id[0]))
+        
+        cur.execute('INSERT INTO hospitalization_prescription (hospitalization_id,prescription_id) VALUES(%s,%s)', (hosp[0],presc_id[0]))
+        
+        cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(decode['user_id'],payload['patient_id'],payload['validity']))
+        cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(row['dosage'],med_id[0],row['frequency'],presc_id[0]))
+        cur.execute('INSERT INTO prescription_appointment (appointment_id,prescription_id), VALUES(%d,%d)',(appo[0],presc_id[0]))
+        '''
+        
+
         
         conn.commit()
         conn.close()
