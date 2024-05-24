@@ -677,7 +677,7 @@ def schedule_surgery_no_hospitalization():
         conn.commit()
 
         response = {'status': StatusCodes['success'],
-                    'results': f'"hospitalization_id": {hosp_id}, "surgery_id":{surg_id}, "doctor_id": {payload['doctor_id']}, "patient_id": {payload["patient_id"]}, "date": {payload["date"]}'}
+                    'results': f'"hospitalization_id": {hosp_id}, "surgery_id":{surg_id}, "doctor_id": {payload["doctor_id"]}, "patient_id": {payload["patient_id"]}, "date": {payload["date"]}'}
     except (Exception,psycopg2.DatabaseError) as error:
         logger.error(f'')
         response = {'status': StatusCodes['internal_error'],
