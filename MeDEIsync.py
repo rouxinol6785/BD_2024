@@ -1,9 +1,10 @@
-import flask
 import logging
-import psycopg2
-import jwt
 import random
 import time
+import psycopg2
+import jwt
+import flask
+
 
 
 app = flask.Flask(__name__)
@@ -368,7 +369,7 @@ def schedule_appointment():
     logger.debug(f'POST /MeDEIsync_DB/appointment - payload: {payload}')
 
     #appointment_nurse opcional
-    if 'doctor_cc' not in payload or 'date' not in payload or 'type' not in payload or 'price' not in payload:
+    if 'doctor_cc' not in payload or 'date' not in payload or 'type' not in payload:
         response = {'status': StatusCodes['api_error'], 'results': 'payload should be have: doctor_cc - date - type - price'}
         return flask.jsonify(response)
     
@@ -387,8 +388,8 @@ def schedule_appointment():
         return flask.jsonify(response)
     
    
-    statement = 'INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc,bill_id) VALUES (%s,%s,%s,%s)'
-    values = (payload['date'],int(decode['user_id']),int(payload['doctor_cc']),1)
+    statement = 'INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc) VALUES (%s,%s,%s)'
+    values = (payload['date'],int(decode['user_id']),int(payload['doctor_cc']))
     conn = db_connection()
     cur = conn.cursor()
     try:
@@ -577,9 +578,9 @@ def get_top3():
 #daily summary
 #falta meter a query, tive que alterar o ER para cada appointement, prescription, etc terem data
 @app.route('/MeDEIsync_DB/daily/<data_dia>', methods=['GET'])
-def daily_summary(data_dia):
+def daily_summary():
     logger.info(f'GET /MeDEIsync_DB/daily/<data_dia>')
-    logger.debug(f'person_id: {data_dia}')
+    logger.debug(f'person_id: {person_id}')
 
     jwt_token = flask.request.headers.get('Authorization')
     if not jwt_token:
@@ -651,8 +652,8 @@ def schedule_surgery_no_hospitalization():
         response = {'status': StatusCodes['api_error'], 'results': 'payload should be: patient_id - doctor - nurses - date.'}
         return flask.jsonify(response)
 
-    hospitalization = 'INSERT INTO hospitalization (data_inic, bill_id, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s,%s) RETURNING id'
-    hosp_values = (payload['date'],3,decode['user_id'], payload['nurses'][0][0],payload['patient_id'])
+    hospitalization = 'INSERT INTO hospitalization (data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s) RETURNING id'
+    hosp_values = (payload['date'],decode['user_id'], int(payload['nurses'][0][0]),int(payload['patient_id']))
 
     surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
 
@@ -665,7 +666,6 @@ def schedule_surgery_no_hospitalization():
         cur.execute(hospitalization,hosp_values)
         hosp_id = cur.fetchone()
         hosp_id = hosp_id[0]
-
         surg_values = (payload['date'],int(payload['duration']),payload['result'],hosp_id)
         cur.execute(surgery,surg_values)
         surg_id = cur.fetchone()
@@ -719,7 +719,6 @@ def schedule_surgery(h_id):
     cur = conn.cursor()
     try:
         cur.execute("BEGIN TRANSACTION")
-        print(h_id)
         cur.execute('SELECT id FROM hospitalization WHERE id = %s',h_id)
         i = cur.fetchone()
         if i:
@@ -948,7 +947,7 @@ def report():
         surgery s
     JOIN
         doctor_surgery ds ON s.id = ds.surgery_id
-    WHEREpaciente
+    WHERE
         s.surgery_date >= (CURRENT_DATE - INTERVAL '12 months')
     GROUP BY
         ds.doctor_employee_use_cc,
@@ -1108,3 +1107,10 @@ if __name__ == "__main__":
     port = 8080
     app.run(host=host, debug=True, threaded=True, port=port)
     logger.info(f'API v1.0 online: http://{host}:{port}')
+
+
+
+
+
+
+    
