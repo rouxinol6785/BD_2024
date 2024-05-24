@@ -1,79 +1,39 @@
 {
 	"info": {
-		"_postman_id": "2592b340-40ce-424e-a0f9-7bf2a86adcd8",
+		"_postman_id": "180a6e34-48b7-49f4-8f3d-353a7243b501",
 		"name": "MeDEIsync_collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26990253"
+		"_exporter_id": "21082461",
+		"_collection_link": "https://dark-desert-201204.postman.co/workspace/spotivinho~9f717efc-4f58-48df-8ef3-791dd48ab5fe/collection/21082461-180a6e34-48b7-49f4-8f3d-353a7243b501?action=share&source=collection_link&creator=21082461"
 	},
 	"item": [
 		{
-			"name": "regist assistant",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-							"});",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
+			"name": "start",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"nome\" : \"paula\",\n    \"email\" : \"paula@gmail.com\",\n    \"password\" : \"amendoa\",\n    \"data_nascimento\" : \"2000-1-11\",\n    \"cc\": \"897412421\",\n    \"n_utente\": \"120'54543\",\n    \"nib\": \"PT50008273657486235\",\n    \"contract\": \"i love this game\",\n    \"field_0\": \"2142512\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:8080/MeDEIsync_DB/register/assistant",
+					"raw": "http://localhost:8080/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"MeDEIsync_DB",
-						"register",
-						"assistant"
+						""
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "regist patient",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-							"});",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
+			"name": "Add patient",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nome\" : \"alfredo\",\n    \"email\" : \"alfredo@gmail.com\",\n    \"password\" : \"ameixa\",\n    \"data_nascimento\" : \"1992-1-13\",\n    \"cc\": \"213412441\",\n    \"n_utente\": \"21314554\",\n    \"nib\": \"PT5012897643986124596\",\n    \"medical_record\": \"pneumonia\"\n}",
+					"raw": "{\r\n    \"cc\": \"45678\",\r\n    \"nome\": \"duarte\",\r\n    \"password\": \"1234\",\r\n    \"data_nascimento\": \"2003-01-11\",\r\n    \"medical_record\": \"clean\",\r\n    \"n_utente\": \"123456\",\r\n    \"nib\" :\"23456\",\r\n    \"email\" : \"ftgvhb\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -97,28 +57,13 @@
 			"response": []
 		},
 		{
-			"name": "Regist doctor",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-							"});",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
+			"name": "Add doctor",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nome\" : \"joao\",\n    \"email\" : \"joao@gmail.com\",\n    \"password\" : \"abacate\",\n    \"data_nascimento\" : \"2000-12-10\",\n    \"cc\": \"365634563\",\n    \"n_utente\": \"2144141\",\n    \"nib\": \"PT50009980091280821\",\n    \"contract\": \"adoro o meu trabalho\",\n    \"medical_license\": \"de 7/12/2010 até 2030\",\n    \"main_specialization\": \"genecologia\"\n}",
+					"raw": "{\r\n    \"nome\":\"doctor2\",\r\n    \"email\":\"doc@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"data_nascimento\": \"1999-2-21\",\r\n    \"cc\": \"12345\",\r\n    \"n_utente\": \"54321\",\r\n    \"nib\": \"123456\",\r\n    \"contract\": \"no rights!\",\r\n    \"medical_license\": \"licensed by UC!\",\r\n    \"main_specialization\": \"dentist\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -142,28 +87,13 @@
 			"response": []
 		},
 		{
-			"name": "Regist nurse",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-							"});",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
+			"name": "Add nurse",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"nome\" : \"carolina\",\n    \"email\" : \"carolina@gmail.com\",\n    \"password\" : \"abacaxi\",\n    \"data_nascimento\" : \"2000-12-11\",\n    \"cc\": \"2309847\",\n    \"n_utente\": \"31298743\",\n    \"nib\": \"PT50007812654378162\",\n    \"contract\": \"odeio o meu trabalho\",\n    \"internal_hierarchy\": \"enfermeira chefe\"\n}",
+					"raw": "{\r\n    \"nome\": \"nurse2\",\r\n    \"email\": \"nurse@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"data_nascimento\": \"1998-09-01\",\r\n    \"cc\": \"5678\",\r\n    \"n_utente\": \"6765\",\r\n    \"nib\": \"234567\",\r\n    \"contract\": \"nurse2win\",\r\n    \"internal_hierarchy\":  \"slave\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -181,6 +111,36 @@
 						"MeDEIsync_DB",
 						"register",
 						"nurse"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add assistant",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"assis\",\r\n    \"email\": \"ass@gmail.com\",\r\n    \"password\": \"1234\",\r\n    \"data_nascimento\": \"2003-01-11\",\r\n    \"cc\" : \" 34567\",\r\n    \"n_utente\": \"76543\",\r\n    \"nib\": \"234567\",\r\n    \"contract\": \"my soul for a ferrari\",\r\n    \"field_0\": \"0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/register/assistant",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"register",
+						"assistant"
 					]
 				}
 			},
@@ -225,7 +185,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"patient1\",\r\n    \"password\": \"1234\"\r\n}",
+					"raw": "{\r\n    \"username\": \"jesus\",\r\n    \"password\": \"pass_do?jesus\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -306,6 +266,50 @@
 			"response": []
 		},
 		{
+			"name": "Schedule Appointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjU1OTM0N30.sw1PRZaiBi1VKRmF8yzwlEC68t1f3gqJFTtwjhkpqlQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6MTIzNDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjQxNzIyNX0.l03zE0XqkDJxTFKyywFG-XiuiGKtAjc-95vVhT9nQ5M",
+						"value": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"doctor_cc\": \"1234\",\r\n    \"date\": \"2024-06-02\",\r\n    \"type\": \"ver as unhas\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/appointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "See Appointments",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -316,7 +320,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjQyNDY2Nn0.Qjo5adT_XjxkpMztw4cwI77sa83S3kqKp45YHkqbra4",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjozNDU2LCJkdXJhY2FvX3Rva2VuIjoxNzE2NTU5MjkwfQ.czNpeYatKITZD4TBvrX5R7Erowzn_fBZtP5yzyzAyWg",
 							"type": "string"
 						}
 					]
@@ -349,50 +353,6 @@
 			"response": []
 		},
 		{
-			"name": "Schedule Appointment",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjQyNDY2Nn0.Qjo5adT_XjxkpMztw4cwI77sa83S3kqKp45YHkqbra4",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6MTIzNDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjQxNzIyNX0.l03zE0XqkDJxTFKyywFG-XiuiGKtAjc-95vVhT9nQ5M",
-						"value": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"doctor_cc\": \"214324\",\r\n    \"date\": \"2024-05-30\",\r\n    \"type\": \"ver do figado\",\r\n    \"price\": \"4\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/MeDEIsync_DB/appointment",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"MeDEIsync_DB",
-						"appointment"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Schedule surgery (no hospitalization)",
 			"request": {
 				"auth": {
@@ -400,7 +360,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjozNDU2LCJkdXJhY2FvX3Rva2VuIjoxNzE2NDMxMzk1fQ.nO3TTcs13GPBGrYU251zkmwk0HjiqhRgsjkOmkqcqNI",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjozNDU2LCJkdXJhY2FvX3Rva2VuIjoxNzE2NTU4OTcyfQ.VlZkbODf3BLk9kXnoaE0SETOqnImTp9jfHc9BBmSpVQ",
 							"type": "string"
 						}
 					]
@@ -426,6 +386,247 @@
 					"path": [
 						"MeDEIsync_DB",
 						"surgery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Schedule surgery",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjozNDU2LCJkdXJhY2FvX3Rva2VuIjoxNzE2NTU4OTcyfQ.VlZkbODf3BLk9kXnoaE0SETOqnImTp9jfHc9BBmSpVQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"patient_id\": \"4567\",\r\n    \"doctor\": \"1234\",\r\n    \"nurses\": [[\"2345\",\"responsible\"],[\"5678\",\"just learning\"]],\r\n    \"date\": \"2024-06-02\",\r\n    \"duration\" : \"2\",\r\n    \"result\": \"open head\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/surgery/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"surgery",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get prescription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjU1OTM0N30.sw1PRZaiBi1VKRmF8yzwlEC68t1f3gqJFTtwjhkpqlQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/prescriptions/4567",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"prescriptions",
+						"4567"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add prescription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJkb2N0b3IiLCJ1c2VyX2lkIjoxMjM0LCJkdXJhY2FvX3Rva2VuIjoxNzE2NTU5NzMyfQ.sPrNIVbqy7MNrknv4-fLemjEmVOxuqMErBH5d-73Uko",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"hospitalization\",\r\n    \"event_id\" : \"7\",\r\n    \"validity\": \"2024-05-23\",\r\n    \"medicines\": [{\"medicine\":\"ben-u-ron\",\"dosage\":\"1g\",\"frequency\":\"every 8 hours\"},{\"medicine\":\"brufen\",\"dosage\":\"0,5g\",\"frequency\":\"4 hours after ben-u-ron\"}],\r\n    \"patient_id\": \"4567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/prescription",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"prescription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pay bill",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjU2MDIyNX0.WnyBb9nkmp43NfuUY1nqD9k_8c3bsuTDx6fjjj8qLfw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\": \"2024-05-23\",\r\n    \"ammount\" : \"2\",\r\n    \"method\": \"ATM\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/bills/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"bills",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Top 3 patients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjU2MDIyNX0.WnyBb9nkmp43NfuUY1nqD9k_8c3bsuTDx6fjjj8qLfw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/top3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"top3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Daily summary",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjU2MDIyNX0.WnyBb9nkmp43NfuUY1nqD9k_8c3bsuTDx6fjjj8qLfw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/daily/2024-05-24",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"daily",
+						"2024-05-24"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Monthly report",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjozNDU2LCJkdXJhY2FvX3Rva2VuIjoxNzE2NTAyMjY1fQ.bZ6K4NM4YEOwaJcYcP9bRFcLsDRrwt8OaLDbGyR06DM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/report",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"report"
 					]
 				}
 			},
