@@ -576,7 +576,6 @@ def get_top3():
 
 
 #daily summary
-#falta meter a query, tive que alterar o ER para cada appointement, prescription, etc terem data
 @app.route('/MeDEIsync_DB/daily/<data_dia>', methods=['GET'])
 def daily_summary(data_dia):
     logger.info(f'GET /MeDEIsync_DB/daily/<data_dia>')
@@ -625,9 +624,6 @@ def daily_summary(data_dia):
 
 
 #schedule surgery, hospitalization not provided
-# FALTA bill update/create -> triggers
-
-# adicionar data?
 @app.route('/MeDEIsync_DB/surgery', methods = ['POST'])
 def schedule_surgery_no_hospitalization():
     logger.info('POST /MeDEIsync_DB/surgery')
@@ -688,7 +684,7 @@ def schedule_surgery_no_hospitalization():
     return flask.jsonify(response)
 
 # schedule surgery with hospitalization
-@app.route('/MeDEIsync_DB/surgery/<hospitalization_id>', methods = ['POST'])
+@app.route('/MeDEIsync_DB/surgery/<h_id>', methods = ['POST'])
 def schedule_surgery(h_id):
     logger.info('POST /MeDEIsync_DB/surgery')
 
@@ -775,7 +771,7 @@ def payment(bill_id):
     cur = conn.cursor()
     try:
         cur.execute("BEGIN TRANSACTION")
-        cur.execute("SELECT (ammount_left,patient_use_cc) FROM bill WHERE id = %s",(bill_id))
+        cur.execute("SELECT (ammount,patient_use_cc) FROM bill WHERE id = %s",(bill_id))
         query = cur.fetchone()
         query = query[0].split('(')
         query = query[1].split(')')
@@ -787,15 +783,15 @@ def payment(bill_id):
                     new_ammount = pay_ammmount - int(query[0])
 
                     values = (payload['date'],new_ammount,payload['method'],decode['user_id'],bill_id)
-                    cur.execute("UPDATE public.bill SET ammount_left = 0, status = 'paid' WHERE id = %s",(bill_id,))
+                    cur.execute("UPDATE public.bill SET ammount = 0, status = 'paid' WHERE id = %s",(bill_id,))
                     cur.execute("INSERT INTO payment(pay_date,paid_amount,payment_method,patient_use_cc,bill_id) VALUES (%s,%s,%s,%s,%s)", values) 
                     response = {'status':StatusCodes['success'], 'results': 'bill paid!'}
                 else:
                     new_ammount = int(query[0]) - pay_ammmount
                     values = (payload['date'],new_ammount,payload['method'],decode['user_id'],bill_id)
 
-                    cur.execute("UPDATE bill SET ammount_left = %s WHERE id = %s",(new_ammount,bill_id))
-                    cur.execute("INSERT INTO payment(pay_date,paid_ammount,payment_methood,patient_use_cc,bill_id) VALUES(%s,%s,%s,%s,%s)") ###
+                    cur.execute("UPDATE bill SET ammount = %s WHERE id = %s",(new_ammount,bill_id))
+                    cur.execute("INSERT INTO payment(pay_date,paid_ammount,payment_method,patient_use_cc,bill_id) VALUES(%s,%s,%s,%s,%s)",(payload['date'],pay_ammmount,payload['method'],decode['user_id'],bill_id)) ###
                     response = {'status':StatusCodes['success'], 'results': f'bill deducted, ammount left - {new_ammount}'}
 
             else:
@@ -827,7 +823,8 @@ def add_prescription():
         return flask.jsonify(response)
     
     if decode['funcao'] != 'doctor':
-        response = {'status':StatusCodes['api_error'], "error":'Only patients can pay their own bills'}
+        response = {'status':StatusCodes['api_error'], "error":'Only doctors can add prescriptions'}
+        return flask.jsonify(response)
 
     payload = flask.request.get_json()
     if 'type' not in payload or 'event_id' not in payload or 'validity' not in payload or 'medicines' not in payload or 'patient_id' not in payload:
@@ -851,7 +848,7 @@ def add_prescription():
         if payload['type'] == 'hospitalization':
             cur.execute('SELECT id FROM hospitalization WHERE id = %s',(payload['event_id'],))
             hosp = cur.fetchone()
-            if cur:
+            if hosp:
                 pass
             else:
                 response = {'status':StatusCodes['api_error'], 'error': 'Error in event_id'}
@@ -860,21 +857,27 @@ def add_prescription():
             
             cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(decode['user_id'],payload['patient_id'],payload['validity']))
             presc_id = cur.fetchone()
-            
-            for row in payload['medicines']:
-                cur.execute('SELECT id FROM medication WHERE name = %s',(row['medicine'],))
-                med_id = cur.fetchone()
-                
-                if med_id:
-                    cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(row['dosage'],med_id[0],row['frequency'],presc_id[0]))
-                
-                else:
-                    response = {'status':StatusCodes['api_error'],'error': f"couldn't find medicine {row['medicine']}"}
-                    conn.rollback()
-                    conn.close()
-                    return flask.jsonify(response)
+            if presc_id:
+                for row in payload['medicines']:
+                    cur.execute('SELECT id FROM medication WHERE name = %s',(row['medicine'],))
+                    med_id = cur.fetchone()
+                    
+                    if med_id:
+                        cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(row['dosage'],med_id[0],row['frequency'],presc_id[0]))
+                        print('helo')
+                    else:
+                        response = {'status':StatusCodes['api_error'],'error': f"couldn't find medicine {row['medicine']}"}
+                        conn.rollback()
+                        conn.close()
+                        return flask.jsonify(response)
+            else:
+                response = {'status':StatusCodes['api_error'],'error': f"Error adding prescription."}
+                conn.rollback()
+                conn.close()
+                return flask.jsonify(response)
             
             cur.execute('INSERT INTO hospitalization_prescription (hospitalization_id,prescription_id) VALUES(%s,%s)', (hosp[0],presc_id[0]))
+            print('hi')
             conn.commit()
             response = {'status':StatusCodes['success'], 'success': f'prescription added!!  prescription_id - {presc_id[0] }'}
         
@@ -922,7 +925,6 @@ def add_prescription():
     return flask.jsonify(response)
 
 
-# À partida funciona agora para testar temos que adicionar cenas com força
 #Generate monthly report
 @app.route('/MeDEIsync_DB/report',methods = ['GET'])
 def report():
@@ -938,31 +940,27 @@ def report():
     cur = conn.cursor()
     try:
         cur.execute('''WITH surgery_counts AS (
-    SELECT
-        ds.doctor_employee_use_cc,
-        TO_CHAR(s.surgery_date, 'YYYY-MM') AS month,
-        COUNT(*) AS surgeries_count,
-        ROW_NUMBER() OVER (PARTITION BY TO_CHAR(s.surgery_date, 'YYYY-MM') ORDER BY COUNT(*) DESC) AS rn
-    FROM
-        surgery s
-    JOIN
-        doctor_surgery ds ON s.id = ds.surgery_id
-    WHERE
-        s.surgery_date >= (CURRENT_DATE - INTERVAL '12 months')
-    GROUP BY
-        ds.doctor_employee_use_cc,
-        TO_CHAR(s.surgery_date, 'YYYY-MM')
-)
-SELECT
-    doctor_employee_use_cc,
-    month,
-    surgeries_count
-FROM
-    surgery_counts
-WHERE
-    rn = 1
-ORDER BY
-    month;''')
+            SELECT
+                ds.doctor_employee_use_cc,
+                TO_CHAR(s.surgery_date, 'YYYY-MM') AS month,
+                COUNT(*) AS surgeries_count,
+                ROW_NUMBER() OVER (PARTITION BY TO_CHAR(s.surgery_date, 'YYYY-MM') ORDER BY COUNT(*) DESC) AS rn
+            FROM surgery s
+                            
+            JOIN doctor_surgery ds ON s.id = ds.surgery_id
+                            
+            WHERE s.surgery_date >= (CURRENT_DATE - INTERVAL '12 months')
+            GROUP BY ds.doctor_employee_use_cc,
+                TO_CHAR(s.surgery_date, 'YYYY-MM')
+                )
+                            
+            SELECT
+                doctor_employee_use_cc,
+                month,
+                surgeries_count
+            FROM surgery_counts
+            WHERE rn = 1
+            ORDER BY month;''')
         t = cur.fetchall()
         response = {'status': StatusCodes['success'], 'success': f'results {t}'}
     except(Exception,psycopg2.DatabaseError) as error:
@@ -1147,16 +1145,6 @@ def temporary_insert():
         if conn is not None:
             conn.close()
     return flask.jsonify(response)
-
-def add_bill(user_id,bill_ammount):
-    conn = db_connection()
-    cur = conn.cursor()
-
-    values = ('2024-05-23',id,3456,2345,4567)
-    cur.execute("INSERT INTO hospitalization(data_inic,bill_id,assistant_employee_use_cc,nurse_employee_use_cc,patient_use_cc) VALUES(%s,%s,%s,%s,%s)", values)
-    conn.commit()
-    conn.close()
-    return 1
 
 if __name__ == "__main__":
     host = '127.0.0.1'
