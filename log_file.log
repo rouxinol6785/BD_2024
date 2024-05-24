@@ -363,3 +363,462 @@ INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre
 INFO:werkzeug: * Restarting with stat
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: relation "use" does not exist
+LINE 1: INSERT INTO use (nome, email, password, data_nascimento, cc,...
+                    ^
+:1
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 18:33:57] "GET / HTTP/1.1" 200 -
+DEBUG:logger:start - error: duplicate key value violates unique constraint "bill_pkey"
+DETAIL:  Key (id)=(1) already exists.
+CONTEXT:  SQL statement "insert into bill(ammount,status,patient_use_cc) 
+ VALUES (10,'to_pay',NEW.patient_use_cc)
+returning id"
+PL/pgSQL function appbill() line 5 at SQL statement
+:25
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 18:35:00] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: duplicate key value violates unique constraint "bill_pkey"
+DETAIL:  Key (id)=(2) already exists.
+CONTEXT:  SQL statement "insert into bill(ammount,status,patient_use_cc) 
+ VALUES (10,'to_pay',NEW.patient_use_cc)
+returning id"
+PL/pgSQL function appbill() line 5 at SQL statement
+:25
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 18:36:18] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: duplicate key value violates unique constraint "bill_pkey"
+DETAIL:  Key (id)=(3) already exists.
+CONTEXT:  SQL statement "insert into bill(ammount,status,patient_use_cc) 
+ VALUES (10,'to_pay',NEW.patient_use_cc)
+returning id"
+PL/pgSQL function appbill() line 5 at SQL statement
+:25
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 18:40:56] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: duplicate key value violates unique constraint "use_pkey"
+DETAIL:  Key (cc)=(10000001) already exists.
+:1
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 18:41:04] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: duplicate key value violates unique constraint "bill_pkey"
+DETAIL:  Key (id)=(1) already exists.
+CONTEXT:  SQL statement "insert into bill(ammount,status,patient_use_cc) 
+ VALUES (10,'to_pay',NEW.patient_use_cc)
+returning id"
+PL/pgSQL function appbill() line 6 at SQL statement
+:25
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 18:50:59] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: INSERT has more expressions than target columns
+LINE 1: ...employee_use_cc) VALUES (0,'2024-05-24',10000001,20000001,0)
+                                                                     ^
+:24
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 18:57:08] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: not all arguments converted during string formatting:21
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:03:13] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: not all arguments converted during string formatting:21
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:04:04] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: not all arguments converted during string formatting:21
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:04:16] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: not all arguments converted during string formatting:21
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:05:44] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: not all arguments converted during string formatting:21
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:06:39] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: insert or update on table "medication_side_effect" violates foreign key constraint "medication_side_effect_fk2"
+DETAIL:  Key (medication_id)=(0) is not present in table "medication".
+:23
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:07:08] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: insert or update on table "medication_side_effect" violates foreign key constraint "medication_side_effect_fk1"
+DETAIL:  Key (side_effect_id)=(4) is not present in table "side_effect".
+:23
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:08:20] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: insert or update on table "medication_side_effect" violates foreign key constraint "medication_side_effect_fk1"
+DETAIL:  Key (side_effect_id)=(1) is not present in table "side_effect".
+:23
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:09:51] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: insert or update on table "prescription_medication" violates foreign key constraint "prescription_medication_fk1"
+DETAIL:  Key (medication_id)=(0) is not present in table "medication".
+:27
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:14:22] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: insert or update on table "medication_side_effect" violates foreign key constraint "medication_side_effect_fk1"
+DETAIL:  Key (side_effect_id)=(1) is not present in table "side_effect".
+:23
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:15:30] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:18:32] "GET / HTTP/1.1" 200 -
+INFO:logger:MeDEIsync_DB/report
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:20:25] "GET /MeDEIsync_DB/report HTTP/1.1" 200 -
+INFO:logger:PUT http://localhost:8080/MeDEIsync_DB/user
+DEBUG:logger:PUT http://localhost:8080/MeDEIsync_DB/user - payload - {'username': 'assistant1', 'password': '1234'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:20:42] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
+INFO:logger:PUT http://localhost:8080/MeDEIsync_DB/user
+DEBUG:logger:PUT http://localhost:8080/MeDEIsync_DB/user - payload - {'username': 'assistant1', 'password': 'password1'}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:21:02] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
+INFO:logger:PUT http://localhost:8080/MeDEIsync_DB/user
+DEBUG:logger:PUT http://localhost:8080/MeDEIsync_DB/user - payload - {'username': 'assistente1', 'password': 'password1'}
+DEBUG:logger:jwt_payload - {'funcao': 'assistant', 'user_id': 40000001, 'duracao_token': 1716575473}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:21:13] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
+INFO:logger:MeDEIsync_DB/report
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:21:21] "GET /MeDEIsync_DB/report HTTP/1.1" 200 -
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:21:39] "[31m[1mGET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1[0m" 401 -
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: syntax error at or near "%"
+LINE 3: ...     (SELECT COUNT(*) FROM surgery WHERE surgery_date = %s),
+                                                                   ^
+
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:21:43] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:logger:GET /MeDEIsync_DB/top3
+ERROR:logger:GET /MeDEIsync_DB/top3 - error: invalid reference to FROM-clause entry for table "use"
+LINE 9:                     bill b ON use.cc = b.patient_use_cc
+                                      ^
+HINT:  Perhaps you meant to reference the table alias "u".
+
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:21:50] "GET /MeDEIsync_DB/top3 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: syntax error at or near "%"
+LINE 3: ...     (SELECT COUNT(*) FROM surgery WHERE surgery_date = %s),
+                                                                   ^
+
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:27:08] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: column "paid_amount" does not exist
+LINE 4:                         (SELECT SUM(paid_amount) FROM paymen...
+                                            ^
+HINT:  Perhaps you meant to reference the column "payment.paid_amomunt".
+
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:28:11] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: column "paid_ammount" does not exist
+LINE 4:                         (SELECT SUM(paid_ammount) FROM payme...
+                                            ^
+HINT:  Perhaps you meant to reference the column "payment.paid_amomunt".
+
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:28:24] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: list index out of range
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:29:04] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: list index out of range
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:29:22] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: list index out of range
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:30:16] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: list index out of range
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:30:25] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: list index out of range
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:30:53] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:31:48] "[31m[1mGET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1[0m" 401 -
+INFO:logger:PUT http://localhost:8080/MeDEIsync_DB/user
+DEBUG:logger:PUT http://localhost:8080/MeDEIsync_DB/user - payload - {'username': 'assistente1', 'password': 'password1'}
+DEBUG:logger:jwt_payload - {'funcao': 'assistant', 'user_id': 40000001, 'duracao_token': 1716576114}
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:31:54] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: list index out of range
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:32:01] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: list index out of range
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:32:21] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+ERROR:logger:GET /MeDEIsync_DB/daily/<data_dia> - error: 'tuple' object does not support item assignment
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:32:53] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:logger:GET /MeDEIsync_DB/daily/<data_dia>
+DEBUG:logger:person_id: 2024-05-24
+INFO:werkzeug:127.0.0.1 - - [24/May/2024 19:33:34] "GET /MeDEIsync_DB/daily/2024-05-24 HTTP/1.1" 200 -
