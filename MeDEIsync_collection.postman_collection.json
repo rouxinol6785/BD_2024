@@ -1,20 +1,34 @@
 {
 	"info": {
-		"_postman_id": "180a6e34-48b7-49f4-8f3d-353a7243b501",
+		"_postman_id": "2592b340-40ce-424e-a0f9-7bf2a86adcd8",
 		"name": "MeDEIsync_collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "21082461",
-		"_collection_link": "https://dark-desert-201204.postman.co/workspace/spotivinho~9f717efc-4f58-48df-8ef3-791dd48ab5fe/collection/21082461-180a6e34-48b7-49f4-8f3d-353a7243b501?action=share&source=collection_link&creator=21082461"
+		"_exporter_id": "26990253"
 	},
 	"item": [
 		{
-			"name": "Add patient",
+			"name": "regist assistant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"cc\": \"1234567\",\r\n    \"nome\": \"duarte\",\r\n    \"password\": \"1234\",\r\n    \"data_nascimento\": \"2003-01-11\",\r\n    \"medical_record\": \"clean\"\r\n}",
+					"raw": "{\n    \"nome\" : \"paula\",\n    \"email\" : \"paula@gmail.com\",\n    \"password\" : \"amendoa\",\n    \"data_nascimento\" : \"2000-1-11\",\n    \"cc\": \"897412421\",\n    \"n_utente\": \"120'54543\",\n    \"nib\": \"PT50008273657486235\",\n    \"contract\": \"i love this game\",\n    \"field_0\": \"2142512\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -22,7 +36,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/MeDEIsync_DB/user/register/patient",
+					"raw": "http://localhost:8080/MeDEIsync_DB/register/assistant",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -30,9 +44,143 @@
 					"port": "8080",
 					"path": [
 						"MeDEIsync_DB",
-						"user",
+						"register",
+						"assistant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "regist patient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\" : \"alfredo\",\n    \"email\" : \"alfredo@gmail.com\",\n    \"password\" : \"ameixa\",\n    \"data_nascimento\" : \"1992-1-13\",\n    \"cc\": \"213412441\",\n    \"n_utente\": \"21314554\",\n    \"nib\": \"PT5012897643986124596\",\n    \"medical_record\": \"pneumonia\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/register/patient",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
 						"register",
 						"patient"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Regist doctor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\" : \"joao\",\n    \"email\" : \"joao@gmail.com\",\n    \"password\" : \"abacate\",\n    \"data_nascimento\" : \"2000-12-10\",\n    \"cc\": \"365634563\",\n    \"n_utente\": \"2144141\",\n    \"nib\": \"PT50009980091280821\",\n    \"contract\": \"adoro o meu trabalho\",\n    \"medical_license\": \"de 7/12/2010 até 2030\",\n    \"main_specialization\": \"genecologia\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/register/doctor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"register",
+						"doctor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Regist nurse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\" : \"carolina\",\n    \"email\" : \"carolina@gmail.com\",\n    \"password\" : \"abacaxi\",\n    \"data_nascimento\" : \"2000-12-11\",\n    \"cc\": \"2309847\",\n    \"n_utente\": \"31298743\",\n    \"nib\": \"PT50007812654378162\",\n    \"contract\": \"odeio o meu trabalho\",\n    \"internal_hierarchy\": \"enfermeira chefe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/register/nurse",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"register",
+						"nurse"
 					]
 				}
 			},
@@ -158,50 +306,6 @@
 			"response": []
 		},
 		{
-			"name": "Schedule Appointment",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjQyNDY2Nn0.Qjo5adT_XjxkpMztw4cwI77sa83S3kqKp45YHkqbra4",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6MTIzNDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjQxNzIyNX0.l03zE0XqkDJxTFKyywFG-XiuiGKtAjc-95vVhT9nQ5M",
-						"value": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"doctor_cc\": \"1234\",\r\n    \"date\": \"2024-06-02\",\r\n    \"type\": \"ver as unhas\",\r\n    \"price\": \"2\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/MeDEIsync_DB/appointment",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"MeDEIsync_DB",
-						"appointment"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "See Appointments",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -239,6 +343,50 @@
 						"MeDEIsync_DB",
 						"appointments",
 						"4567"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Schedule Appointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6NDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjQyNDY2Nn0.Qjo5adT_XjxkpMztw4cwI77sa83S3kqKp45YHkqbra4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJwYXRpZW50IiwidXNlcl9pZCI6MTIzNDU2NywiZHVyYWNhb190b2tlbiI6MTcxNjQxNzIyNX0.l03zE0XqkDJxTFKyywFG-XiuiGKtAjc-95vVhT9nQ5M",
+						"value": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"doctor_cc\": \"214324\",\r\n    \"date\": \"2024-05-30\",\r\n    \"type\": \"ver do figado\",\r\n    \"price\": \"4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/MeDEIsync_DB/appointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"MeDEIsync_DB",
+						"appointment"
 					]
 				}
 			},
