@@ -1091,17 +1091,25 @@ def temporary_insert():
 
         #insere side effects
         side_effects    =["side_effect1"    ,"side_effect1" ,"side_effect1" ,"side_effect1" ,"side_effect1"]
+        side_effect_ids =[]
         for i in range(5):
-            cur.execute("INSERT INTO side_effect (description) VALUES (%s)",(side_effects[i],))
+            cur.execute("INSERT INTO side_effect (description) VALUES (%s) RETURNING id",(side_effects[i],))
+            id = cur.fetchone()[0]
+            side_effect_ids.append(id)
         j=j+1
         #insere medicamentos
         medication  =["medication1","medication2","medication3","medication4","medication5"]
+        medication_ids =[]
         for i in range(5):
-            cur.execute("INSERT INTO medication (name) VALUES (%s)",(medication[i],))
+            cur.execute("INSERT INTO medication (name) VALUES (%s) RETURNING id",(medication[i],))
+            id = cur.fetchone()[0]
+            medication_ids.append(id)
 
         j=j+1
+        medication_side_effect = []
         for i in range(5):
-            cur.execute("INSERT INTO medication_side_effect (severity, probability, side_effect_id, medication_id) VALUES (%s,%s,%s,%s)",(i,"0.8", i + 1, i + 1))
+            cur.execute("INSERT INTO medication_side_effect (severity, probability, side_effect_id, medication_id) VALUES (%s,%s,%s,%s)",(i,"0.8", side_effect_ids[i], medication_ids[i]))
+            
         j=j+1
 
 
