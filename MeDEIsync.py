@@ -1121,7 +1121,7 @@ def temporary_insert():
         #insere appointments
         appointment_date=["2024-05-24","2024-04-30","2024-05-21","2024-03-21","2024-06-15"]
         for i in range(5):
-            cur.execute("INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc, bill_id) VALUES (%s,%s,%s,%s)", (appointment_date[i], pacientes_id[i], medicos_id[i],i))
+            cur.execute("INSERT INTO appointment (id, ap_date,patient_use_cc,doctor_employee_use_cc, bill_id) VALUES (%s,%s,%s,%s,%s)", (i,appointment_date[i], pacientes_id[i], medicos_id[i],i))
         j=j+1
        
         #inserir hospitalizações e cirurgias
@@ -1130,26 +1130,26 @@ def temporary_insert():
         hospitalization_date    =["2024-03-3"   ,"2024-02-9"    ,"2024-06-11"   ,"2024-07-16"   ,"2024-06-19"]
 
         for i in range(5):
-            cur.execute("INSERT INTO hospitalization (data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s) RETURNING id", (hospitalization_date[i], assistentes_id[i], enfermeiros_id[i], pacientes_id[i]))
-            cur.execute("INSERT INTO surgery(surgery_date, success, hospitalization_id) VALUES (%s,%s,%s) RETURNING id", (surgery_date[i], "True", i))
+            cur.execute("INSERT INTO hospitalization (id, data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s, %s,%s,%s,%s) RETURNING id", (i, hospitalization_date[i], assistentes_id[i], enfermeiros_id[i], pacientes_id[i]))
+            cur.execute("INSERT INTO surgery(id, surgery_date, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id", (i, surgery_date[i], "True", i))
             cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], i))
         j=j+1
 
         #insert surgeries
         surgery_date            =["2024-04-4"   ,"2024-05-10"   ,"2024-07-12"   ,"2024-08-17"   ,"2024-07-20"]
         for i in range(5):
-            cur.execute("INSERT INTO surgery(surgery_date, success, hospitalization_id) VALUES (%s,%s,%s) RETURNING id",(surgery_date[i], "True", i))
-            cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], i+5))
+            cur.execute("INSERT INTO surgery(surgery_date, results, hospitalization_id) VALUES (%s,%s,%s) RETURNING id",(surgery_date[i], "True", i))
+            cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], i))
         j=j+1
         #add prescriptions
         validades   =["2025-1-1","2026-1-1","2027-1-1","2028-1-1","2029-1-1"]
         frequencia  =["1 vez dia","2 vez dia","3 vez dia","4 vez dia","5 vez dia"]
 
         for i in range(5):
+            cur.execute("INSERT INTO prescription (id, doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s,%s) RETURNING id",(i, medicos_id[i], pacientes_id[i], validades[i]))
             cur.execute('INSERT INTO hospitalization_prescription (hospitalization_id,prescription_id) VALUES(%s,%s)', (i, i))
-            cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(medicos_id[i], pacientes_id[i], validades[i]))
             cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(i+2, i, frequencia[i], i))
-            cur.execute('INSERT INTO prescription_appointment (appointment_id,prescription_id), VALUES(%d,%d)',(i,i))
+            cur.execute('INSERT INTO prescription_appointment (appointment_id,prescription_id) VALUES(%s,%s)',(i,i))
         j=j+1
         
         conn.commit()
