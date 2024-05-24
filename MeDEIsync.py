@@ -578,9 +578,9 @@ def get_top3():
 #daily summary
 #falta meter a query, tive que alterar o ER para cada appointement, prescription, etc terem data
 @app.route('/MeDEIsync_DB/daily/<data_dia>', methods=['GET'])
-def daily_summary():
+def daily_summary(data_dia):
     logger.info(f'GET /MeDEIsync_DB/daily/<data_dia>')
-    logger.debug(f'person_id: {person_id}')
+    logger.debug(f'person_id: {data_dia}')
 
     jwt_token = flask.request.headers.get('Authorization')
     if not jwt_token:
