@@ -1129,23 +1129,16 @@ def temporary_insert():
             cur.execute("INSERT INTO surgery(surgery_date, success, hospitalization_id) VALUES (%s,%s,%s) RETURNING id",(surgery_date[i], "True", i))
             cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], i+5))
 
+        #add prescriptions
+        validades   =["2025-1-1","2026-1-1","2027-1-1","2028-1-1","2029-1-1"]
+        frequencia  =["1 vez dia","2 vez dia","3 vez dia","4 vez dia","5 vez dia"]
 
-        '''
-        add_prescription
-
-        cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(decode['user_id'],payload['patient_id'],payload['validity']))
+        for i in range(5):
+            cur.execute('INSERT INTO hospitalization_prescription (hospitalization_id,prescription_id) VALUES(%s,%s)', (i, i))
+            cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(medicos_id[i], pacientes_id[i], validades[i]))
+            cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(i+2, i, frequencia[i], i))
+            cur.execute('INSERT INTO prescription_appointment (appointment_id,prescription_id), VALUES(%d,%d)',(i,i))
         
-
-        cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(row['dosage'],med_id[0],row['frequency'],presc_id[0]))
-        
-        cur.execute('INSERT INTO hospitalization_prescription (hospitalization_id,prescription_id) VALUES(%s,%s)', (hosp[0],presc_id[0]))
-        
-        cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(decode['user_id'],payload['patient_id'],payload['validity']))
-        cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(row['dosage'],med_id[0],row['frequency'],presc_id[0]))
-        cur.execute('INSERT INTO prescription_appointment (appointment_id,prescription_id), VALUES(%d,%d)',(appo[0],presc_id[0]))
-        '''
-        
-
         
         conn.commit()
         conn.close()
