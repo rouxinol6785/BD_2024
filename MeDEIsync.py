@@ -1092,6 +1092,7 @@ def temporary_insert():
         statement = 'INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc) VALUES (%s,%s,%s)'
         values = (payload['date'],int(decode['user_id']),int(payload['doctor_cc']))
         '''
+        appointment_date=["2024"]
 
         '''
         schedule_surgery_no_hospitalization
