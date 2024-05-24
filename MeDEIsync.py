@@ -625,7 +625,8 @@ def daily_summary():
 
 #schedule surgery, hospitalization not provided
 # FALTA bill update/create -> triggers
-# alter results -> its a schedule not a log
+
+# adicionar data?
 @app.route('/MeDEIsync_DB/surgery', methods = ['POST'])
 def schedule_surgery_no_hospitalization():
     logger.info('POST /MeDEIsync_DB/surgery')
@@ -686,6 +687,7 @@ def schedule_surgery_no_hospitalization():
             conn.close()
     return flask.jsonify(response)
 
+# schedule surgery with hospitalization
 @app.route('/MeDEIsync_DB/surgery/<hospitalization_id>', methods = ['POST'])
 def schedule_surgery(h_id):
     logger.info('POST /MeDEIsync_DB/surgery')
@@ -720,7 +722,7 @@ def schedule_surgery(h_id):
         print(h_id)
         cur.execute('SELECT id FROM hospitalization WHERE id = %s',h_id)
         i = cur.fetchone()
-        if cur:
+        if i:
             pass
         else:
             response = {'status': StatusCodes['api_error'], 'error': 'hospitalization id is not correct.'}
@@ -814,7 +816,6 @@ def payment(bill_id):
 
 
 #add prescription
-#adidcionar a frequencia
 @app.route('/MeDEIsync_DB/prescription', methods = ['POST'])
 def add_prescription():
     logger.info('POST /MeDEIsync_DB/prescription')
@@ -1031,6 +1032,7 @@ def temporary_insert():
         conn.commit()
         conn.close()
         response = {'status': StatusCodes['internal_error'], 'success':'yey!'}
+
     except(Exception,psycopg2.DatabaseError)as error:
         logger.debug(f'start - error{error}')
         response = {'status':StatusCodes['internal_error'],'errors': str(error)}
