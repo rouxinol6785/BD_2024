@@ -95,7 +95,7 @@ def patient_registration():
             cur.execute(statemnt2,values2)
             conn.commit()
             response = {
-                'status': StatusCodes['success'], 'results': f"Paciente {payload['nome']} inserido!"
+                'status': StatusCodes['success'], 'results': f"Paciente {payload['nome']} inserido! cc - {payload['cc']}"
             }
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(f'POST /MeDEIsync_DB/registration/patient - error: {error}')
@@ -155,7 +155,7 @@ def assistant_registration():
             cur.execute(statemnt3,values3)
             conn.commit()
             response = {
-                'status': StatusCodes['success'], 'results': f"Assistente {payload['nome']} inserido!"
+                'status': StatusCodes['success'], 'results': f"Assistente {payload['nome']} inserido! cc - {payload['cc']}"
             }
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(f'POST /MeDEIsync_DB/registration/assistant - error: {error}')
@@ -217,7 +217,7 @@ def nurse_registration():
             cur.execute(statemnt3,values3)
             conn.commit()
             response = {
-                'status': StatusCodes['success'], 'results': f"Enfermeir@ {payload['nome']} inserid@!"
+                'status': StatusCodes['success'], 'results': f"Enfermeir@ {payload['nome']} inserid@! cc - {payload['cc']}"
             }
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(f'POST /MeDEIsync_DB/registration/nurse - error: {error}')
@@ -280,7 +280,7 @@ def doctor_registration():
             cur.execute(statemnt3,values3)
             conn.commit()
             response = {
-                'status': StatusCodes['success'], 'results': f"Medic@ {payload['nome']} inserid@!"
+                'status': StatusCodes['success'], 'results': f"Medic@ {payload['nome']} inserid@! cc - {payload['cc']}"
             }
     except (Exception, psycopg2.DatabaseError) as error:
         logger.error(f'POST /MeDEIsync_DB/registration/doctor - error: {error}')
@@ -388,7 +388,7 @@ def schedule_appointment():
         return flask.jsonify(response)
     
    
-    statement = 'INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc) VALUES (%s,%s,%s)'
+    statement = 'INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc) VALUES (%s,%s,%s) RETURNING id'
     values = (payload['date'],int(decode['user_id']),int(payload['doctor_cc']))
     conn = db_connection()
     cur = conn.cursor()
@@ -402,8 +402,9 @@ def schedule_appointment():
             return flask.jsonify(response)
         cur.execute("BEGIN TRANSACTION")
         cur.execute(statement,values)
+        app_id = cur.fetchone()
         conn.commit()
-        response = {'status': StatusCodes['success'], 'results': 'appointment added!'}
+        response = {'status': StatusCodes['success'], 'results': f'appointment added! id - {app_id[0]}'}
     
     except(Exception,psycopg2.DatabaseError)as error:
         logger.error(f'POST /MeDEIsync_DB/appointment - error: {error}')
@@ -609,7 +610,7 @@ def daily_summary(data_dia):
             ''')
             rows = cur.fetchall()
             if rows:
-                response = {'status': 'success', 'results': rows}
+                response = {'status': 'success', 'results': f'surgeries - {rows[0]}, ammount spent - {rows[1]}, prescriptions - {rows[0]}'}
             else:
                 response = {'status': 'success', 'results': 'No prescriptions for this user'}
                 
@@ -676,7 +677,7 @@ def schedule_surgery_no_hospitalization():
         conn.commit()
 
         response = {'status': StatusCodes['success'],
-                    'results': f'"hospitalization_id": {hosp_id}, "surgery_id":{surg_id}, "patient_id": {payload["patient_id"]}, "date": {payload["date"]}'}
+                    'results': f'"hospitalization_id": {hosp_id}, "surgery_id":{surg_id}, "doctor_id": {payload['doctor_id']}, "patient_id": {payload["patient_id"]}, "date": {payload["date"]}'}
     except (Exception,psycopg2.DatabaseError) as error:
         logger.error(f'')
         response = {'status': StatusCodes['internal_error'],
@@ -1009,6 +1010,7 @@ def time_up(token):
 def temporary_insert():
     conn = db_connection()
     cur = conn.cursor()
+    
     try:
         #info pacientes
         pacientes_nome          =["paciente1"               ,"paciente2"                ,"paciente3"                ,"paciente4"                ,"paciente5"                ]

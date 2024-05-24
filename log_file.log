@@ -359,3 +359,7 @@ INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre
 INFO:werkzeug: * Restarting with stat
 WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:werkzeug: * Detected change in 'c:\\Users\\epdro\\Desktop\\LEI\\2º Semestre\\BD\\projeto\\BD_2024\\MeDEIsync.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
