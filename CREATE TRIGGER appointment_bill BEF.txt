@@ -1,4 +1,3 @@
-#### appointment trigger
 
 create or replace function appBill() returns trigger
 LANGUAGE plpgsql as $$
@@ -18,8 +17,6 @@ $$;
 
 CREATE TRIGGER appointment_bill BEFORE INSERT on appointment
 FOR EACH ROW EXECUTE PROCEDURE appBill();
-
-### surgery trigger
 
 
 
