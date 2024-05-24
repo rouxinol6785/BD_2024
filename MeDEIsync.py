@@ -1010,31 +1010,147 @@ def temporary_insert():
     conn = db_connection()
     cur = conn.cursor()
     try:
+        #info pacientes
+        pacientes_nome          =["paciente1"               ,"paciente2"                ,"paciente3"                ,"paciente4"                ,"paciente5"                ]
+        pacientes_id            =[10000001                  ,10000002                   ,10000003                   ,10000004                   ,10000005                   ]
+        pacientes_email         =["paciente1@gmail.com"     ,"paciente2@gmail.com"      ,"paciente3@gmail.com"      ,"paciente4@gmail.com"      ,"paciente5@gmail.com"      ]
+        pacientes_password      =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
+        pacientes_data          =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]
+        pacientes_n_utente      =[11111111                  ,11111112                   ,11111113                   ,11111114                   ,11111115                   ]
+        pacientes_nib           =["PT5010000000001"         ,"PT5010000000002"          ,"PT5010000000003"          ,"PT5010000000004"          ,"PT5010000000005"          ]
+        pacientes_medical_rec   =["medical_rec1"            ,"medical_rec1"             ,"medical_rec1"             ,"medical_rec1"             ,"medical_rec1"             ]
+
+
+        #info medicos
+        medicos_nome            =["medico1"                 ,"medico2"                  ,"medico3"                  ,"medico4"                  ,"medico5"                  ]
+        medicos_id              =[20000001                  ,20000002                   ,20000003                   ,20000004                   ,20000005                   ]
+        medicos_email           =["medico1@gmail.com"       ,"medico2@gmail.com"        ,"medico3@gmail.com"        ,"medico4@gmail.com"        ,"medico5@gmail.com"        ]
+        medicos_password        =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
+        medicos_data            =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]
+        medicos_n_utente        =[22222221                  ,22222222                   ,22222223                   ,22222224                   ,22222225                   ]
+        medicos_nib             =["PT5020000000001"         ,"PT5020000000002"          ,"PT5020000000003"          ,"PT5020000000004"          ,"PT5020000000005"          ]
+        medicos_license         =["universidade de coimbra" ,"universidade de lisboa"   ,"universidade do porto"    ,"universidade do minho"    ,"universidade do algarve"  ]
+        medicos_specialization  =["genecologia"             ,"ortopedia"                ,"cardiologia"              ,"neurologia"               ,"cirurgia"                 ]
+        
+
+        #info enfermeiros
+        enfermeiros_nome        =["enfermeiro1"             ,"enfermeiro2"              ,"enfermeiro3"              ,"enfermeiro4"              ,"enfermeiro5"              ]
+        enfermeiros_id          =[30000001                  ,30000002                   ,30000003                   ,30000004                   ,30000005                   ]
+        enfermeiros_email       =["enfermeiro1@gmail.com"   ,"enfermeiro2@gmail.com"    ,"enfermeiro3@gmail.com"    ,"enfermeiro4@gmail.com"    ,"enfermeiro5@gmail.com"    ]
+        enfermeiros_password    =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
+        enfermeiros_data        =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]      
+        enfermeiros_n_utente    =[33333331                  ,33333332                   ,33333333                   ,33333334                   ,33333335                   ]
+        enfermeiros_nib         =["PT5030000000001"         ,"PT5030000000002"          ,"PT5030000000003"          ,"PT5030000000004"          ,"PT5030000000005"          ]
+        enfermeiros_hierarquia  =["chefe"                   ,"auxiliar"                 ,"assistente"               ,"supervisor"               ,"chefe de unidade"         ]
+
+
+        #info assistentes
+        assistentes_nome        =["assistente1"             ,"assistente2"              ,"assistente3"              ,"assistente4"              ,"assistente5"              ]
+        assistentes_id          =[40000001                  ,40000002                   ,40000003                   ,40000004                   ,40000005                   ]
+        assistentes_email       =["assistente1@gmail.com"   ,"assistente2@gmail.com"    ,"assistente3@gmail.com"    ,"assistente4@gmail.com"    ,"assistente5@gmail.com"    ]
+        assistentes_password    =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
+        assistentes_data        =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]
+        assistentes_n_utente    =[44444441                  ,44444442                   ,44444443                   ,44444444                   ,44444445                   ]
+        assistentes_nib         =["PT5040000000001"         ,"PT5040000000002"          ,"PT5040000000003"          ,"PT5040000000004"          ,"PT5040000000005"          ]
+        assistente_field_0      =[1                         ,2                          ,3                          ,4                          ,5] 
+
+        #tempos dos contratos (melhor meter data de fim)
+        contratos               =["2 anos"                  ,"3 anos"                   ,"1 ano"                    ,"5 anos"                   ,"3 anos"                   ]
+
+        j = 1
         cur.execute("BEGIN TRANSACTION")
-        cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(1234,'doctor1',1234,'2003-01-11',1423))
-        cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (1234,'yolo'))
-        cur.execute("INSERT INTO doctor(employee_use_cc,medical_license,main_specialization) VALUES(%s,%s,%s)",(1234,'uc','neuroscience'))
+
+        #insere pacientes
+        for i in range(5):
+            cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES (%s,%s,%s,%s,%s,%s,%s)",(pacientes_nome[i], pacientes_email[i], pacientes_password[i], pacientes_data[i], pacientes_id[i], pacientes_n_utente[i], pacientes_nib[i]))
+            cur.execute("INSERT INTO patient(medical_record,use_cc) VALUES(%s,%s)",(pacientes_medical_rec[i], pacientes_id[i]))
+            j=j+1
+
+        #insere medicos
+        for i in range(5):
+            cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES (%s,%s,%s,%s,%s,%s,%s)",(medicos_nome[i], medicos_email[i], medicos_password[i], medicos_data[i], medicos_id[i], medicos_n_utente[i], medicos_nib[i]))
+            cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (medicos_id[i], contratos[i]))
+            cur.execute("INSERT INTO doctor(employee_use_cc,medical_license,main_specialization) VALUES(%s,%s,%s)",(medicos_id[i], medicos_license[i], medicos_specialization[i]))
+            j=j+1
+
+        #insere enfermeiros
+        for i in range(5):
+            cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES (%s,%s,%s,%s,%s,%s,%s)",(enfermeiros_nome[i], enfermeiros_email[i], enfermeiros_password[i], enfermeiros_data[i], enfermeiros_id[i], enfermeiros_n_utente[i], enfermeiros_nib[i]))
+            cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (enfermeiros_id[i], contratos[i]))
+            cur.execute("INSERT INTO nurse(employee_use_cc,internal_hierarchy) VALUES(%s,%s)",(enfermeiros_id[i], enfermeiros_hierarquia[i]))
+            j=j+1
+
+        #insere assistentes
+        for i in range(5):
+            cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES (%s,%s,%s,%s,%s,%s,%s)",(assistentes_nome[i], assistentes_email[i], assistentes_password[i], assistentes_data[i], assistentes_id[i], assistentes_n_utente[i], assistentes_nib[i]))
+            cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (assistentes_id[i], contratos[i]))
+            cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(assistentes_id[i], assistente_field_0[i]))
+            j=j+1  
+
+
+        #insere appointments
+        appointment_date=["2024-05-24","2024-04-30","2024-05-21","2024-03-21","2024-06-15"]
+        for i in range(5):
+            cur.execute("INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc) VALUES (%s,%s,%s)", (appointment_date[i], pacientes_id[i], medicos_id[i]))
+
+        '''
+        schedule_surgery_no_hospitalization
+        
+        hospitalization = 'INSERT INTO hospitalization (data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s) RETURNING id'
+        hosp_values = (payload['date'],decode['user_id'], int(payload['nurses'][0][0]),int(payload['patient_id']))
+
+        surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
+        surgery_nurses = 'INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)'
+        '''
+
+
+        #MUDAR TIPO DO ATRIBUTO DURATION
+        surgery_date            =["2024-03-4","2024-02-10","2024-06-12","2024-07-17","2024-06-20"]
+        hospitalization_date    =["2024-03-3","2024-02-9","2024-06-11","2024-07-16","2024-06-19"]
+
+        for i in range(5):
+            cur.execute("INSERT INTO hospitalization (data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s) RETURNING id", (hospitalization_date[i], assistentes_id[i], enfermeiros_id[i], pacientes_id[i]))
+            cur.execute("INSERT INTO surgery(surgery_date, success, hospitalization_id) VALUES (%s,%s,%s) RETURNING id", (surgery_date[i], "True", i))
+            cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], i))
+
+
+        '''
+        schedule_surgery
+        surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
+
+        surgery_nurses = 'INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)'
+        '''
+
+        '''
+        bill
+        cur.execute("UPDATE bill SET ammount_left = %s WHERE id = %s",(new_ammount,bill_id))
+        cur.execute("INSERT INTO payment(pay_date,paid_ammount,payment_methood,patient_use_cc,bill_id) VALUES(%s,%s,%s,%s,%s)")
+
+        '''
+
+        '''
+        add_prescription
+
+        cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(decode['user_id'],payload['patient_id'],payload['validity']))
+        
+
+        cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(row['dosage'],med_id[0],row['frequency'],presc_id[0]))
+        
+        cur.execute('INSERT INTO hospitalization_prescription (hospitalization_id,prescription_id) VALUES(%s,%s)', (hosp[0],presc_id[0]))
+        
+        cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(decode['user_id'],payload['patient_id'],payload['validity']))
+        cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(row['dosage'],med_id[0],row['frequency'],presc_id[0]))
+        cur.execute('INSERT INTO prescription_appointment (appointment_id,prescription_id), VALUES(%d,%d)',(appo[0],presc_id[0]))
+        '''
+        
 
         
-        cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)",('fatima', 'fatima@gmail.com','pass_da?fatima','2000-04-11',2345,412354235,"PT0987125769"))
-        cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (2345,'yolo'))
-        cur.execute("INSERT INTO nurse(employee_use_cc,internal_hierarchy) VALUES(%s,%s)",(2345,'chief_nurse'))
-
-
-        
-        cur.execute("INSERT INTO use (cc, nome, password, data_nascimento, nib) VALUES (%s,%s,%s,%s,%s)",(3456,'assistant1',1234,'2003-01-11',324))
-        cur.execute("INSERT INTO employee (use_cc, contract) VALUES(%s,%s)", (3456,'yolo'))
-        cur.execute("INSERT INTO assistant(employee_use_cc,field_0) VALUES(%s,%s)",(3456,2))
-
-        
-        cur.execute("INSERT INTO use (nome, email, password, data_nascimento, cc, n_utente, nib) VALUES(%s,%s,%s,%s,%s,%s,%s)",('jesus', 'jesus@gmail.com','pass_do?jesus','1950-10-20',4567,9864218,"PT09832176812345"))
-        cur.execute("INSERT INTO patient(use_cc,medical_record) VALUES(%s,%s)",(4567,'yolo'))
         conn.commit()
         conn.close()
         response = {'status': StatusCodes['internal_error'], 'success':'yey!'}
 
     except(Exception,psycopg2.DatabaseError)as error:
-        logger.debug(f'start - error{error}')
+        logger.debug(f'start - error: {error}:{j}')
         response = {'status':StatusCodes['internal_error'],'errors': str(error)}
         conn.rollback()
     finally:
