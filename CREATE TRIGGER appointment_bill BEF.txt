@@ -1,26 +1,26 @@
 #### appointment trigger
 
-CREATE TRIGGER appointment_bill BEFORE INSERT on appointment
-FOR EACH ROW EXECUTE PROCEDURE appBill();
-
 create or replace function appBill() returns trigger
 LANGUAGE plpgsql as $$
 DECLARE
     new_bill_id INTEGER;
 BEGIN
+LOCK TABLE bill IN ACCESS EXCLUSIVE MODE;
  insert into bill(ammount,status,patient_use_cc) 
  VALUES (10,'to_pay',NEW.patient_use_cc)
 returning id into new_bill_id;
 NEW.bill_id := new_bill_id;
 
 return new;
+COMMIT;
 END;
 $$;
 
+CREATE TRIGGER appointment_bill BEFORE INSERT on appointment
+FOR EACH ROW EXECUTE PROCEDURE appBill();
+
 ### surgery trigger
 
-CREATE TRIGGER surgBill BEFORE INSERT ON surgery
-FOR EACH ROW EXECUTE PROCEDURE surgery_bill()
 
 
 CREATE OR REPLACE FUNCTION surgery_bill() RETURNS TRIGGER
@@ -30,6 +30,7 @@ DECLARE
 	patient_id INTEGER;
 	new_bill_id INTEGER;
 BEGIN
+LOCK TABLE bill IN ACCESS EXCLUSIVE MODE;
  SELECT bill_id INTO ex_bill_id
  FROM hospitalization_bill
  WHERE hospitalization_id = NEW.hospitalization_id;
@@ -50,7 +51,11 @@ BEGIN
   VALUES (NEW.hospitalization_id,new_bill_id);
  END IF;
 RETURN NEW;
+COMMIT;
 END;
 $$
-  
+
+CREATE TRIGGER surgBill BEFORE INSERT ON surgery
+FOR EACH ROW EXECUTE PROCEDURE surgery_bill()
+
   
