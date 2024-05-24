@@ -1096,7 +1096,6 @@ def temporary_insert():
         for i in range(5):
             cur.execute("INSERT INTO side_effect (description) VALUES (%s)",(side_effects[i]))
 
-        
         #insere medicamentos
         medication  =["medication1","medication2","medication3","medication4","medication5"]
         for i in range(5):
@@ -1124,19 +1123,12 @@ def temporary_insert():
             cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], i))
 
 
-        '''
-        schedule_surgery
-        surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
+        #insert surgeries
+        surgery_date            =["2024-04-4"   ,"2024-05-10"   ,"2024-07-12"   ,"2024-08-17"   ,"2024-07-20"]
+        for i in range(5):
+            cur.execute("INSERT INTO surgery(surgery_date, success, hospitalization_id) VALUES (%s,%s,%s) RETURNING id",(surgery_date[i], "True", i))
+            cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], i+5))
 
-        surgery_nurses = 'INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)'
-        '''
-
-        '''
-        bill
-        cur.execute("UPDATE bill SET ammount_left = %s WHERE id = %s",(new_ammount,bill_id))
-        cur.execute("INSERT INTO payment(pay_date,paid_ammount,payment_methood,patient_use_cc,bill_id) VALUES(%s,%s,%s,%s,%s)")
-
-        '''
 
         '''
         add_prescription
