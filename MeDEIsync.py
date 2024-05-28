@@ -542,15 +542,25 @@ def get_top3():
         try:
             cur.execute('''
                 SELECT 
-                    u.id,
-                    u.name,
-                    SUM(b.amount) AS total_spent
+                    u.cc,
+                    u.nome,
+                    SUM(b.ammount) AS total_spent,
+                    a.id,
+                    a.ap_date,
+                    h.id,
+                    h.data_inic
                 FROM 
                     use u
                 JOIN 
                     bill b ON u.cc = b.patient_use_cc
+                LEFT JOIN
+                    appointment a ON b.id = a.bill_id
+                LEFT JOIN
+                    hospitalization_bill hb ON b.id = hb.bill_id
+                LEFT JOIN
+                    hospitalization as h ON hb.hospitalization_id = h.id
                 GROUP BY 
-                    u.id
+                    u.cc,u.nome,a.id,h.id
                 ORDER BY 
                     total_spent DESC
                 LIMIT 3;
@@ -644,7 +654,7 @@ def schedule_surgery_no_hospitalization():
     if decode['funcao'] != 'assistant':
         response = {'status': StatusCodes['api_error'],'results': 'Only assistants allowed to schedule surgeries.'}
         return flask.jsonify(response)
-    
+
     payload = flask.request.get_json()
     logger.debug(f'POST /MeDEIsync_DB/surgery - payload:{payload}')
 
@@ -653,7 +663,7 @@ def schedule_surgery_no_hospitalization():
         return flask.jsonify(response)
 
     hospitalization = 'INSERT INTO hospitalization (data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s) RETURNING id'
-    hosp_values = (payload['date'],decode['user_id'], int(payload['nurses'][0][0]),int(payload['patient_id']))
+    hosp_values = (payload['date'],decode['user_id'], payload['nurses'][0][0],int(payload['patient_id']))
 
     surgery = 'INSERT INTO surgery(surgery_date, duration, results, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id'
 
@@ -664,16 +674,19 @@ def schedule_surgery_no_hospitalization():
     try:
         cur.execute("BEGIN TRANSACTION")
         cur.execute(hospitalization,hosp_values)
+
         hosp_id = cur.fetchone()
         hosp_id = hosp_id[0]
         surg_values = (payload['date'],int(payload['duration']),payload['result'],hosp_id)
         cur.execute(surgery,surg_values)
+
         surg_id = cur.fetchone()
         surg_id = surg_id[0]
 
         for row in payload['nurses']:
             nurses_values = (row[1],row[0],surg_id)
             cur.execute(surgery_nurses,nurses_values)
+
         conn.commit()
 
         response = {'status': StatusCodes['success'],
@@ -719,7 +732,7 @@ def schedule_surgery(h_id):
     cur = conn.cursor()
     try:
         cur.execute("BEGIN TRANSACTION")
-        cur.execute('SELECT id FROM hospitalization WHERE id = %s',h_id)
+        cur.execute('SELECT id FROM hospitalization WHERE id = %s',(h_id,))
         i = cur.fetchone()
         if i:
             pass
@@ -949,7 +962,7 @@ def report():
                 ROW_NUMBER() OVER (PARTITION BY TO_CHAR(s.surgery_date, 'YYYY-MM') ORDER BY COUNT(*) DESC) AS rn
             FROM surgery s
                             
-            JOIN doctor_surgery ds ON s.id = ds.surgery_id
+            RIGHT JOIN doctor_surgery ds ON s.id = ds.surgery_id
                             
             WHERE s.surgery_date >= (CURRENT_DATE - INTERVAL '12 months')
             GROUP BY ds.doctor_employee_use_cc,

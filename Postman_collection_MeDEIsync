@@ -185,7 +185,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"jesus\",\r\n    \"password\": \"pass_do?jesus\"\r\n}",
+					"raw": "{\r\n    \"username\": \"paciente1\",\r\n    \"password\": \"password1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -214,7 +214,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"doctor1\",\r\n    \"password\": \"1234\"\r\n}",
+					"raw": "{\r\n    \"username\": \"doctor1\",\r\n    \"password\": \"password1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -243,7 +243,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"nurse1\",\r\n    \"password\": \"1234\"\r\n}",
+					"raw": "{\r\n    \"username\": \"nurse1\",\r\n    \"password\": \"password1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -399,7 +399,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjozNDU2LCJkdXJhY2FvX3Rva2VuIjoxNzE2NTU4OTcyfQ.VlZkbODf3BLk9kXnoaE0SETOqnImTp9jfHc9BBmSpVQ",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjo0MDEsImR1cmFjYW9fdG9rZW4iOjE3MTY5MDc5OTR9.ZDpSwggDllHVGn9tZBkps2Zga-I1MYN015_2C_2uXd8",
 							"type": "string"
 						}
 					]
@@ -408,7 +408,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"patient_id\": \"4567\",\r\n    \"doctor\": \"1234\",\r\n    \"nurses\": [[\"2345\",\"responsible\"],[\"5678\",\"just learning\"]],\r\n    \"date\": \"2024-06-02\",\r\n    \"duration\" : \"2\",\r\n    \"result\": \"open head\"\r\n}",
+					"raw": "{\r\n    \"patient_id\": \"103\",\r\n    \"doctor\": \"1234\",\r\n    \"nurses\": [[\"301\",\"responsible\"],[\"302\",\"just learning\"]],\r\n    \"date\": \"2024-06-02\",\r\n    \"duration\" : \"2\",\r\n    \"result\": \"open head\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -416,7 +416,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/MeDEIsync_DB/surgery/7",
+					"raw": "http://localhost:8080/MeDEIsync_DB/surgery/47",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -425,7 +425,7 @@
 					"path": [
 						"MeDEIsync_DB",
 						"surgery",
-						"7"
+						"47"
 					]
 				}
 			},
@@ -549,7 +549,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjo0MDAwMDAwMSwiZHVyYWNhb190b2tlbiI6MTcxNjU3NTQ3M30.M6ixLLYEx1xyiOk7wYFmBq880KUEkqikEFkurRxGzpE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjo0MDEsImR1cmFjYW9fdG9rZW4iOjE3MTY5MDgzNDd9.jv6mZZa7RRANaqjMBSz5eKYZzddCx2x_4OGUb0-FDWY",
 							"type": "string"
 						}
 					]
@@ -579,7 +579,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjo0MDAwMDAwMSwiZHVyYWNhb190b2tlbiI6MTcxNjU3NjExNH0.k3CXPEVE1iZXL5td6oq_RPQuCWUgyX1ovNd-1Aty8Vs",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjo0MDEsImR1cmFjYW9fdG9rZW4iOjE3MTY5MDYwMzZ9.wAZSTUwMtV7ouotW61X50JYMDiUY_9EfdyQsXqqaJKI",
 							"type": "string"
 						}
 					]
@@ -610,7 +610,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjo0MDAwMDAwMSwiZHVyYWNhb190b2tlbiI6MTcxNjU3NTQ3M30.M6ixLLYEx1xyiOk7wYFmBq880KUEkqikEFkurRxGzpE",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdW5jYW8iOiJhc3Npc3RhbnQiLCJ1c2VyX2lkIjo0MDEsImR1cmFjYW9fdG9rZW4iOjE3MTY5MDkyMzJ9.hffeOJuroLxRVuewkg9ajkB-8PsW3pWUSlvHWKhbxCw",
 							"type": "string"
 						}
 					]
