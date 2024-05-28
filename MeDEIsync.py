@@ -1100,7 +1100,6 @@ def temporary_insert():
             j=j+1  
 
 
-
         #insere side effects
         side_effects    =["side_effect1"    ,"side_effect1" ,"side_effect1" ,"side_effect1" ,"side_effect1"]
         side_effect_ids =[]
@@ -1116,13 +1115,11 @@ def temporary_insert():
             cur.execute("INSERT INTO medication (name) VALUES (%s) RETURNING id",(medication[i],))
             id = cur.fetchone()[0]
             medication_ids.append(id)
-
         j=j+1
         for i in range(5):
             cur.execute("INSERT INTO medication_side_effect (severity, probability, side_effect_id, medication_id) VALUES (%s,%s,%s,%s)",(i,"0.8", side_effect_ids[i], medication_ids[i]))
 
         j=j+1
-
 
       
 
@@ -1134,7 +1131,6 @@ def temporary_insert():
             id = cur.fetchone()[0]
             appointment_id.append(id)
         j=j+1
-
         #inserir hospitalizações e cirurgias
         #MUDAR TIPO DO ATRIBUTO DURATION
         surgery_date            =["2024-03-4"   ,"2024-02-10"   ,"2024-06-12"   ,"2024-07-17"   ,"2024-06-20"]
@@ -1148,11 +1144,10 @@ def temporary_insert():
             id = cur.fetchone()[0]
             cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], id))
         j=j+1
-
         #insert surgeries
         surgery_date            =["2024-04-4"   ,"2024-05-10"   ,"2024-07-12"   ,"2024-08-17"   ,"2024-07-20"]
         for i in range(5):
-            cur.execute("INSERT INTO surgery(surgery_date, results, hospitalization_id) VALUES (%s,%s,%s) RETURNING id",(surgery_date[i], "True", hospitalization_id[i]))
+            cur.execute("INSERT INTO surgery(surgery_date, results, duration, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id",(surgery_date[i], "True",(i+1)*4, hospitalization_id[i]))
             id = cur.fetchone()[0]
             cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], id))
         j=j+1
@@ -1167,7 +1162,6 @@ def temporary_insert():
             cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(i+2, medication_ids[i], frequencia[i], id))
             cur.execute('INSERT INTO prescription_appointment (appointment_id,prescription_id) VALUES(%s,%s)',(appointment_id[i],id))
         j=j+1
-      
         conn.commit()
         conn.close()
         response = {'status': StatusCodes['internal_error'], 'success':'yey!'}

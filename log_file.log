@@ -1336,3 +1336,34 @@ DEBUG:logger:jwt_payload - {'funcao': 'assistant', 'user_id': 401, 'duracao_toke
 INFO:werkzeug:127.0.0.1 - - [28/May/2024 16:03:52] "PUT /MeDEIsync_DB/user HTTP/1.1" 200 -
 INFO:logger:MeDEIsync_DB/report
 INFO:werkzeug:127.0.0.1 - - [28/May/2024 16:04:05] "GET /MeDEIsync_DB/report HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: not all arguments converted during string formatting:26
+INFO:werkzeug:127.0.0.1 - - [28/May/2024 16:14:58] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+DEBUG:logger:start - error: not all arguments converted during string formatting:26
+INFO:werkzeug:127.0.0.1 - - [28/May/2024 16:16:50] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8080
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 414-218-023
+INFO:werkzeug:127.0.0.1 - - [28/May/2024 16:17:08] "GET / HTTP/1.1" 200 -
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
+INFO:logger:API v1.0 online: http://127.0.0.1:8080
