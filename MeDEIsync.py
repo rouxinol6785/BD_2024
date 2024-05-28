@@ -609,7 +609,6 @@ def daily_summary(data_dia):
                         (SELECT COUNT(*) FROM surgery WHERE surgery_date = %s)
             ''',(data_dia,data_dia,data_dia))
             rows = cur.fetchone()
-            print(rows)
             if rows:
                 response = {'status': 'success', 'results': f'surgeries - {rows[0]}, ammount spent - {rows[1]}, prescriptions - {rows[0]}'}
             else:
@@ -1013,7 +1012,7 @@ def temporary_insert():
     try:
         #info pacientes
         pacientes_nome          =["paciente1"               ,"paciente2"                ,"paciente3"                ,"paciente4"                ,"paciente5"                ]
-        pacientes_id            =[10000001                  ,10000002                   ,10000003                   ,10000004                   ,10000005                   ]
+        pacientes_id            =[101                       ,102                        ,103                        ,104                        ,105                   ]
         pacientes_email         =["paciente1@gmail.com"     ,"paciente2@gmail.com"      ,"paciente3@gmail.com"      ,"paciente4@gmail.com"      ,"paciente5@gmail.com"      ]
         pacientes_password      =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
         pacientes_data          =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]
@@ -1024,7 +1023,7 @@ def temporary_insert():
 
         #info medicos
         medicos_nome            =["medico1"                 ,"medico2"                  ,"medico3"                  ,"medico4"                  ,"medico5"                  ]
-        medicos_id              =[20000001                  ,20000002                   ,20000003                   ,20000004                   ,20000005                   ]
+        medicos_id              =[201                       ,202                        ,203                        ,204                        ,205                   ]
         medicos_email           =["medico1@gmail.com"       ,"medico2@gmail.com"        ,"medico3@gmail.com"        ,"medico4@gmail.com"        ,"medico5@gmail.com"        ]
         medicos_password        =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
         medicos_data            =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]
@@ -1036,7 +1035,7 @@ def temporary_insert():
 
         #info enfermeiros
         enfermeiros_nome        =["enfermeiro1"             ,"enfermeiro2"              ,"enfermeiro3"              ,"enfermeiro4"              ,"enfermeiro5"              ]
-        enfermeiros_id          =[30000001                  ,30000002                   ,30000003                   ,30000004                   ,30000005                   ]
+        enfermeiros_id          =[301                       ,302                        ,303                        ,304                        ,305                   ]
         enfermeiros_email       =["enfermeiro1@gmail.com"   ,"enfermeiro2@gmail.com"    ,"enfermeiro3@gmail.com"    ,"enfermeiro4@gmail.com"    ,"enfermeiro5@gmail.com"    ]
         enfermeiros_password    =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
         enfermeiros_data        =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]      
@@ -1047,7 +1046,7 @@ def temporary_insert():
 
         #info assistentes
         assistentes_nome        =["assistente1"             ,"assistente2"              ,"assistente3"              ,"assistente4"              ,"assistente5"              ]
-        assistentes_id          =[40000001                  ,40000002                   ,40000003                   ,40000004                   ,40000005                   ]
+        assistentes_id          =[401                       ,402                        ,403                        ,404                        ,405                   ]
         assistentes_email       =["assistente1@gmail.com"   ,"assistente2@gmail.com"    ,"assistente3@gmail.com"    ,"assistente4@gmail.com"    ,"assistente5@gmail.com"    ]
         assistentes_password    =["password1"               ,"password2"                ,"password3"                ,"password4"                ,"password5"                ]
         assistentes_data        =["1995-1-5"                ,"1996-2-10"                ,"1997-3-15"                ,"1998-4-20"                ,"1999-5-25"                ]
@@ -1106,10 +1105,9 @@ def temporary_insert():
             medication_ids.append(id)
 
         j=j+1
-        medication_side_effect = []
         for i in range(5):
             cur.execute("INSERT INTO medication_side_effect (severity, probability, side_effect_id, medication_id) VALUES (%s,%s,%s,%s)",(i,"0.8", side_effect_ids[i], medication_ids[i]))
-            
+
         j=j+1
 
 
@@ -1117,26 +1115,33 @@ def temporary_insert():
 
         #insere appointments
         appointment_date=["2024-05-24","2024-04-30","2024-05-21","2024-03-21","2024-06-15"]
+        appointment_id = []
         for i in range(5):
-            cur.execute("INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc, bill_id) VALUES (%s,%s,%s,%s)", (appointment_date[i],pacientes_id[i],medicos_id[i], i+1))
+            cur.execute("INSERT INTO appointment (ap_date,patient_use_cc,doctor_employee_use_cc, bill_id) VALUES (%s,%s,%s,%s) RETURNING id", (appointment_date[i],pacientes_id[i],medicos_id[i], i+1))
+            id = cur.fetchone()[0]
+            appointment_id.append(id)
         j=j+1
-       
+
         #inserir hospitalizações e cirurgias
         #MUDAR TIPO DO ATRIBUTO DURATION
         surgery_date            =["2024-03-4"   ,"2024-02-10"   ,"2024-06-12"   ,"2024-07-17"   ,"2024-06-20"]
         hospitalization_date    =["2024-03-3"   ,"2024-02-9"    ,"2024-06-11"   ,"2024-07-16"   ,"2024-06-19"]
-
+        hospitalization_id = []
         for i in range(5):
             cur.execute("INSERT INTO hospitalization (data_inic, assistant_employee_use_cc, nurse_employee_use_cc, patient_use_cc) VALUES (%s,%s,%s,%s) RETURNING id", (hospitalization_date[i], assistentes_id[i], enfermeiros_id[i], pacientes_id[i]))
-            cur.execute("INSERT INTO surgery(surgery_date, results,duration, hospitalization_id) VALUES (%s,%s,%s) RETURNING id", (surgery_date[i], "True", (i + 1)*5,i + 1))
-            cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], i + 1))
+            id = cur.fetchone()[0]
+            hospitalization_id.append(id)
+            cur.execute("INSERT INTO surgery(surgery_date, results, duration, hospitalization_id) VALUES (%s,%s,%s,%s) RETURNING id", (surgery_date[i], "True", (i + 1)*5, id))
+            id = cur.fetchone()[0]
+            cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], id))
         j=j+1
 
         #insert surgeries
         surgery_date            =["2024-04-4"   ,"2024-05-10"   ,"2024-07-12"   ,"2024-08-17"   ,"2024-07-20"]
         for i in range(5):
-            cur.execute("INSERT INTO surgery(surgery_date, results, hospitalization_id) VALUES (%s,%s,%s) RETURNING id",(surgery_date[i], "True", i + 1))
-            cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], i + 5))
+            cur.execute("INSERT INTO surgery(surgery_date, results, hospitalization_id) VALUES (%s,%s,%s) RETURNING id",(surgery_date[i], "True", hospitalization_id[i]))
+            id = cur.fetchone()[0]
+            cur.execute("INSERT INTO surgery_nurse (role,nurse_employee_use_cc, surgery_id) VALUES(%s,%s,%s)", ("ajudante", enfermeiros_id[i], id))
         j=j+1
         #add prescriptions
         validades   =["2025-1-1","2026-1-1","2027-1-1","2028-1-1","2029-1-1"]
@@ -1144,11 +1149,12 @@ def temporary_insert():
 
         for i in range(5):
             cur.execute("INSERT INTO prescription (doctor_employee_use_cc,patient_use_cc,validity) VALUES(%s,%s,%s) RETURNING id",(medicos_id[i], pacientes_id[i], validades[i]))
-            cur.execute('INSERT INTO hospitalization_prescription (hospitalization_id,prescription_id) VALUES(%s,%s)', (i + 1, i + 1))
-            cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(i+2, i + 1, frequencia[i], i + 1))
-            cur.execute('INSERT INTO prescription_appointment (appointment_id,prescription_id) VALUES(%s,%s)',(i + 1,i + 1))
+            id = cur.fetchone()[0]
+            cur.execute('INSERT INTO hospitalization_prescription (hospitalization_id,prescription_id) VALUES(%s,%s)', (hospitalization_id[i],id))
+            cur.execute('INSERT INTO prescription_medication (dosage,medication_id,frequency,prescription_id) VALUES (%s,%s,%s,%s)',(i+2, medication_ids[i], frequencia[i], id))
+            cur.execute('INSERT INTO prescription_appointment (appointment_id,prescription_id) VALUES(%s,%s)',(appointment_id[i],id))
         j=j+1
-        
+      
         conn.commit()
         conn.close()
         response = {'status': StatusCodes['internal_error'], 'success':'yey!'}
